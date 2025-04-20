@@ -41,3 +41,4 @@ terraform.rc
 .terraform.lock.hcl
 files/pull_secret.txt
 
+inventory/hosts.ini

@@ -1,3 +1,7 @@
+# Install OKD at home
+
+Bellow is the original README from upstream - my own comments are at [NOTES.md](NOTES.md)
+
 # Deploying OKD 4.17 with Terraform and Ansible on Proxmox
  
 First of all : if you're deploying this as-is in production, you're going to run into security problems. Guaranteed. This below is a lab setup, made to install and learn OpenShift/OKD in a lab environment. I'm doing dumb stuff, like turning off SELinux, and turning the host firewall off. So yeah, don't try this at work, kids. And I take no responsibility if you're having security issues. 

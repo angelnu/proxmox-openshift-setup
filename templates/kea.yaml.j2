@@ -1,0 +1,132 @@
+{
+	"Dhcp4": {
+		"interfaces-config": {
+			"interfaces": [
+				"eth0"
+			]
+		},
+
+        "host-reservation-identifiers": [
+            "hw-address"
+        ],
+
+		"expired-leases-processing": {
+			"reclaim-timer-wait-time": 10,
+			"flush-reclaimed-timer-wait-time": 25,
+			"hold-reclaimed-time": 3600,
+			"max-reclaim-leases": 100,
+			"max-reclaim-time": 250,
+			"unwarned-reclaim-cycles": 5
+		},
+		"renew-timer": 900,
+		"rebind-timer": 1800,
+		"valid-lifetime": 3600,
+		"option-data": [
+			{
+				"name": "domain-name-servers",
+				"data": "{{ service.ip }}"
+			},
+			{
+				"name": "domain-name",
+				"data": "{{ clusterid }}.{{ domain }}"
+			},
+			{
+				"name": "domain-search",
+				"data": "{{ clusterid }}.{{ domain }}"
+			}
+		],
+		"client-classes": [
+			{
+				"name": "iPXE",
+				"test": "option[175].exists",
+				"option-data": [
+					{
+						"name": "tftp-server-name",
+						"data": "{{ service.ip }}"
+					},
+					{
+						"name": "boot-file-name",
+						"data": "tftp://{{ service.ip }}/pxelinux.0"
+					}
+				]
+			},
+			{
+				"name": "UEFI clients",
+				"test": "option[93].hex == 0x0007 and not option[175].exists",
+				"option-data": [
+					{
+						"name": "tftp-server-name",
+						"data": "{{ service.ip }}"
+					},
+					{
+						"name": "boot-file-name",
+						"data": "/pxelinux.0"
+					}
+				]
+			},
+			{
+				"name": "BIOS clients",
+				"test": "option[93].hex == 0x0000 and not option[175].exists",
+				"option-data": [
+					{
+						"name": "tftp-server-name",
+						"data": "{{ service.ip }}"
+					},
+					{
+						"name": "boot-file-name",
+						"data": "/pxelinux.0"
+					}
+				]
+			}
+		],
+		"subnet4": [
+			{
+				"id": 1,
+				"subnet": "{{ lab_cidr }}",
+				"pools": [
+					{
+						"pool": "{{ lab_dhcp_start }} - {{ lab_dhcp_stop }}"
+					}
+				],
+				"option-data": [
+					{
+						"name": "routers",
+						"data": "{{ lab_gw }}"
+					}
+				],
+                "reservations": [
+                    {% for machine in  masters+workers %}
+                    {
+                    "hostname": "{{ machine.name }}",
+                    "hw-address": "{{ machine.macaddr }}",
+                    "ip-address": "{{ machine.ip }}"
+                    },
+                    {% endfor %}
+                    {
+                    "hostname": "{{ service.name }}",
+                    "hw-address": "{{ service.macaddr }}",
+                    "ip-address": "{{ service.ip }}"
+                    },
+                    {
+                    "hostname": "{{ bootstrap.name }}",
+                    "hw-address": "{{ bootstrap.macaddr }}",
+                    "ip-address": "{{ bootstrap.ip }}"
+                    }
+                ]
+			}
+		],
+		"loggers": [
+			{
+				"name": "kea-dhcp4",
+				"output_options": [
+					{
+						"output": "stdout",
+						"pattern": "%-5p %m\\n"
+					}
+				],
+				"severity": "INFO",
+				"debuglevel": 60
+			}
+		]
+	}
+}

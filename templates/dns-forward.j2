@@ -1,6 +1,6 @@
 {# DNS reverse zone file #}
 $TTL    604800
-@       IN      SOA     {{ service.name }}.{{ domain }}. admin.{{ domain }}. (
+@       IN      SOA     {{ domain }}. admin.{{ domain }}. (
                   1     ; Serial
              604800     ; Refresh
               86400     ; Retry
@@ -9,7 +9,7 @@ $TTL    604800
 )
 
 ; name servers - NS records
-    IN      NS      {{ service.name }}
+    IN      NS      {{ service.name }}.{{ domain }}.
 
 ; name servers - A records
 {{ service.name }}.{{ domain }}.                IN      A       {{ service.ip }}

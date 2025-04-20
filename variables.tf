@@ -16,29 +16,17 @@ variable "passwd" {
   sensitive   = true
 }
 
-variable "target_host" {
-  description = "Hostname to deploy to"
-  type        = string
-  default     = "dantooine"
-}
+# variable "token_id" {
+#   description = "The token created for a user in Proxmox"
+#   type        = string
+#   sensitive   = true
+# }
 
-variable "lxc_passwd" {
-  description = "Password for the root user on containers"
-  type        = string
-  sensitive   = true
-}
-
-variable "token_id" {
-  description = "The token created for a user in Proxmox"
-  type        = string
-  sensitive   = true
-}
-
-variable "token_secret" {
-  description = "The secret created for a user's token in Proxmox"
-  type        = string
-  sensitive   = true
-}
+# variable "token_secret" {
+#   description = "The secret created for a user's token in Proxmox"
+#   type        = string
+#   sensitive   = true
+# }
 variable "ansible_user" {
   description = "Name of the user used by Ansible. By default, I use ansible"
   type        = string
@@ -52,7 +40,6 @@ variable "ansible_pwd" {
 variable "ansible_ssh_public_key" {
   description = "Ansible SSH public key"
   type        = string
-  sensitive   = true
 }
 
 variable "vmid_offset" {

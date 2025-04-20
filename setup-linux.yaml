@@ -23,7 +23,7 @@
           - httpd
           - haproxy
           - tftp-server
-          # - kea # replaces old ISC DHCP server
+          - kea # replaces old ISC DHCP server
           - syslinux
           - git
 
@@ -84,6 +84,7 @@
         - { src: templates/dns-forward.j2, dest: /etc/named/zones/db.forward }
         - { src: templates/dns-reverse.j2, dest: /etc/named/zones/db.reverse }
         - { src: templates/named.conf.j2, dest: /etc/named.conf }
+        - { src: templates/kea.yaml.j2, dest: /etc/kea/kea-dhcp4.conf }
         - {
             src: templates/named.conf.local.j2,
             dest: /etc/named/named.conf.local,
@@ -115,8 +116,8 @@
         - haproxy
         - httpd
         - tftp
-        # - named
-        # - dhcpd
+        - named
+        - kea-dhcp4
 
 - name: Setup OKD services
   hosts: service
