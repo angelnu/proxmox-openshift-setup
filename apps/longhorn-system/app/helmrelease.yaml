@@ -3,9 +3,9 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app echo-server
+  name: &app longhorn
 spec:
-  serviceAccountName: ${TECHNICAL_ACCOUNT}
+  #serviceAccountName: ${TECHNICAL_ACCOUNT}
   interval: 30m
   chart:
     spec:
