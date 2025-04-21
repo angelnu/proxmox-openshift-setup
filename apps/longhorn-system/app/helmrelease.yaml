@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app echo-server
+spec:
+  serviceAccountName: ${TECHNICAL_ACCOUNT}
+  interval: 30m
+  chart:
+    spec:
+      chart: longhorn
+      version: 1.8.1
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: ${MY_NAMESPACE}
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    openshift:
+      enabled: true
+      ui:
+        route: "longhorn-ui"
+        port: 443
+        proxy: 8443
+    image:
+      openshift:
+        oauthProxy:
+          repository: quay.io/openshift/origin-oauth-proxy
+          tag: 4.16
