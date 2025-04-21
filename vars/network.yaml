@@ -1,5 +1,5 @@
 #
-domain: homelab.angelnu.com
+domain: angelnu.com
 clusterid: okd
 resolver: 192.168.2.1
 bridge: vmbr0
