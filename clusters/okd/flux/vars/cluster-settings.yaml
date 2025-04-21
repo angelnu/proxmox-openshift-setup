@@ -7,4 +7,3 @@ metadata:
 data:
   # Cluster dependent
   CLUSTER_NAME: okd
-  CLUSTER_ID: okd

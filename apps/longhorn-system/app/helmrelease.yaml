@@ -35,3 +35,6 @@ spec:
         oauthProxy:
           repository: quay.io/openshift/origin-oauth-proxy
           tag: 4.17
+      defaultBackupStore:
+        backupTarget: cifs://nas.home.angelnu.com/NetBackup/longhorn/${CLUSTER_NAME}
+        backupTargetCredentialSecret: cifs-secret
