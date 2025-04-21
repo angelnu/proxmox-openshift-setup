@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./apps/oauth
+  path: ./apps/openshift-config
   prune: true
   sourceRef:
     kind: GitRepository
