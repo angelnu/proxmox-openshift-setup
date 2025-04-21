@@ -27,7 +27,7 @@ spec:
     openshift:
       enabled: true
       ui:
-        route: "longhorn-ui"
+        route: "ui"
         port: 443
         proxy: 8443
     image:
