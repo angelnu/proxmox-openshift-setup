@@ -34,4 +34,4 @@ spec:
       openshift:
         oauthProxy:
           repository: quay.io/openshift/origin-oauth-proxy
-          tag: 4.16
+          tag: 4.17
