@@ -7,3 +7,6 @@ metadata:
 data:
   # Cluster dependent
   CLUSTER_NAME: okd
+
+  # Common
+  CLUSTER_DOMAIN_CERT: cluster-domain-cert
