@@ -22,4 +22,3 @@ spec:
   postBuild:
     substitute:
       MY_NAMESPACE: *app
-      TECHNICAL_ACCOUNT: *app

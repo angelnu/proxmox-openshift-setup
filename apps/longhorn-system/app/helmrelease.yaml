@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: &app longhorn
 spec:
-  #serviceAccountName: ${TECHNICAL_ACCOUNT}
   interval: 30m
   chart:
     spec:
