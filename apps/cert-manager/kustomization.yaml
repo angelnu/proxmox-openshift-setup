@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ns.yaml
   - operator/ks.yaml
+  - certificate/ks.yaml
