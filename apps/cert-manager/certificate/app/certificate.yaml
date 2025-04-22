@@ -51,7 +51,7 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: acme-crt
+  name: "${CLUSTER_DOMAIN_CERT}"
 spec:
   secretName: "${CLUSTER_DOMAIN_CERT}"
   issuerRef:

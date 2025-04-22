@@ -18,6 +18,7 @@ spec:
   #See https://github.com/angelnu/helm-charts/blob/main/charts/apps/dnsmadeeasy-webhook/values.yaml
   values:
     groupName: "${CLUSTER_DOMAIN}"
+    serviceAccountName: cert-manager
 
     image:
       repository: ghcr.io/angelnu/dnsmadeeasy-webhook
