@@ -48,6 +48,7 @@ spec:
               name: dnsmadeeasy
               key: secret
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cert-manager.io/certificate_v1.json
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -69,4 +70,6 @@ spec:
   #- '*.${CLUSTER_DOMAIN_DUMMY}.${CLUSTER_DOMAIN}'
   secretTemplate:
     annotations:
-      replicator.v1.mittwald.de/replicate-to: "authentik,maddy"
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "openshift-ingress,authentik,maddy"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"

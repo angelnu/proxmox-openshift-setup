@@ -3,6 +3,8 @@ apiVersion: config.openshift.io/v1
 kind: OAuth
 metadata:
   name: cluster
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
 spec:
   identityProviders:
     - name: Casa96
