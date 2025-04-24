@@ -6,3 +6,4 @@ spec:
   image: quay.io/okderators/catalog-index:latest
   displayName: OKD
   publisher: OKD
+  sourceType: grpc
