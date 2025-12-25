@@ -47,7 +47,7 @@
         owner: "{{ item.owner }}"
         mode: 0755 # For some reason, item.mode converts 0755 into 493 ... weird
       loop:
-        - { name: /var/www/html/okd4, owner: root, mode: 0755 }
+        - { name: /var/www/html/okd4, owner: apache, group: apache, mode: 0755 }
         - { name: /etc/named/zones, owner: root, mode: 0755 }
         - { name: tmp, owner: ansible, mode: 0755 }
         - { name: install_dir, owner: ansible, mode: 0755 }
@@ -187,6 +187,7 @@
 
     # Get the pull secret from ~/pull_secret.txt. If you don't have one, create the file and add '{"auths":{"fake":{"auth": "bar"}}}' as the content
     - name: Add Pull Secret to install-config.yaml
+      when: query('ansible.builtin.fileglob', './files/pull_secret.txt') | length > 0
       vars:
         pull: "{{ lookup('file', './files/pull_secret.txt') }}"
       lineinfile:

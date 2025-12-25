@@ -13,7 +13,15 @@ resource "proxmox_vm_qemu" "cloudinit-nodes" {
   vm_state    = local.service.boot # start once created
 
 
-  cores  = local.service.cores
+  cpu {
+    cores  = local.service.cores
+    limit   = 0
+    numa    = false
+    sockets = 1
+    type    = "host"
+    units   = 0
+    vcores  = 0
+  }
   memory = local.service.ram
   scsihw = "virtio-scsi-pci"
   #bootdisk = "scsi0"
@@ -54,6 +62,12 @@ resource "proxmox_vm_qemu" "cloudinit-nodes" {
   ciuser     = var.ansible_user
   cipassword = var.ansible_pwd
   sshkeys    = var.ansible_ssh_public_key
+
+  startup_shutdown {
+    order            = -1
+    shutdown_timeout = -1
+    startup_delay    = -1
+  }
 }
 
 ###################################
@@ -71,7 +85,15 @@ resource "proxmox_vm_qemu" "pxe-nodes" {
   tags        = "okd"
   vm_state    = each.value.boot # start once created
 
-  cores  = each.value.cores
+  cpu {
+    cores  = each.value.cores
+    limit   = 0
+    numa    = false
+    sockets = 1
+    type    = "host"
+    units   = 0
+    vcores  = 0
+  }
   memory = each.value.ram
   scsihw = "virtio-scsi-pci"
   #bootdisk = "scsi0"
@@ -91,6 +113,11 @@ resource "proxmox_vm_qemu" "pxe-nodes" {
     bridge  = local.network.bridge
     tag     = local.network.vlan
     macaddr = each.value.macaddr
+  }
+  startup_shutdown {
+    order            = -1
+    shutdown_timeout = -1
+    startup_delay    = -1
   }
 }
 
