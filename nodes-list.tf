@@ -26,7 +26,7 @@ locals {
     ip          = local.nodes.bootstrap.ip
     macaddr     = local.nodes.bootstrap.macaddr
     vmid        = local.nodes.bootstrap.vmid
-    os          = local.main.pxe_boot_os
+    iso         = local.main.pxe_iso_os
     boot        = "stopped"
   }
 
@@ -40,7 +40,7 @@ locals {
       ip          = node.ip
       macaddr     = node.macaddr # Private MAC address. 
       vmid        = node.vmid
-      os          = local.main.pxe_boot_os
+      iso         = local.main.pxe_iso_os
       boot        = "stopped"
     }
   }
@@ -55,7 +55,7 @@ locals {
       ip          = node.ip
       macaddr     = node.macaddr # Private MAC address. 
       vmid        = node.vmid
-      os          = local.main.pxe_boot_os
+      iso         = local.main.pxe_iso_os
       boot        = "stopped"
     }
   }

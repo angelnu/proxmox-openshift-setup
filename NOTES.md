@@ -2,11 +2,9 @@
 
 ## Preparation
 
-1. Create `pxe-boot` VM - empty
+1. Download `pxe` ISO
    1. download the iPXE bootloader as ISO
-   2. create empty VM without any disk
-   3. attach iPXE as virtual ISO
-   4. make the VM a template
+   2. update [pxe_iso_os](vars/main.yaml)
 2. Create `centos10-cloudinit` VM
    1. create empty VM without any disk
    2. into Proxmox with the VM: wget qcow2 from https://cloud.centos.org/centos/10-stream/x86_64/images/

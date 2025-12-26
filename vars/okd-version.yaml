@@ -46,9 +46,6 @@ okd:
   # kernel: https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/39.20231101.3.0/x86_64/fedora-coreos-39.20231101.3.0-live-kernel-x86_64
   # rootfs: https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/39.20231101.3.0/x86_64/fedora-coreos-39.20231101.3.0-live-rootfs.x86_64.img
   # initramfs: https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/39.20231101.3.0/x86_64/fedora-coreos-39.20231101.3.0-live-initramfs.x86_64.img
-  # [4.21 + coreos 43]
-  client: https://github.com/okd-project/okd/releases/download/4.21.0-okd-scos.ec.9/openshift-client-linux-4.21.0-okd-scos.ec.9.tar.gz
-  install: https://github.com/okd-project/okd/releases/download/4.21.0-okd-scos.ec.9/openshift-install-linux-4.21.0-okd-scos.ec.9.tar.gz
-  kernel: https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/43.20251120.3.0/x86_64/fedora-coreos-43.20251120.3.0-live-kernel.x86_64
-  rootfs: https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/43.20251120.3.0/x86_64/fedora-coreos-43.20251120.3.0-live-rootfs.x86_64.img
-  initramfs: https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/43.20251120.3.0/x86_64/fedora-coreos-43.20251120.3.0-live-initramfs.x86_64.img
+  # [4.20]
+  client: https://github.com/okd-project/okd/releases/download/4.20.0-okd-scos.14/openshift-client-linux-4.20.0-okd-scos.14.tar.gz
+  install: https://github.com/okd-project/okd/releases/download/4.20.0-okd-scos.14/openshift-install-linux-4.20.0-okd-scos.14.tar.gz

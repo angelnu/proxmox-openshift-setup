@@ -47,7 +47,12 @@
         owner: "{{ item.owner }}"
         mode: 0755 # For some reason, item.mode converts 0755 into 493 ... weird
       loop:
-        - { name: /var/www/html/okd4, owner: apache, group: apache, mode: 0755 }
+        - {
+            name: /var/www/html/okd4,
+            owner: ansible,
+            group: ansible,
+            mode: 0755,
+          }
         - { name: /etc/named/zones, owner: root, mode: 0755 }
         - { name: tmp, owner: ansible, mode: 0755 }
         - { name: install_dir, owner: ansible, mode: 0755 }
@@ -141,12 +146,11 @@
       with_items:
         - { src: "{{ okd.client }}", dest: tmp/client.tar.gz }
         - { src: "{{ okd.install }}", dest: tmp/install.tar.gz }
-        - { src: "{{ okd.kernel }}", dest: tmp/kernel }
-        - { src: "{{ okd.rootfs }}", dest: tmp/rootfs.img }
-        - { src: "{{ okd.initramfs }}", dest: tmp/initramfs.img }
         - { src: "{{ jq_file }}", dest: tmp/jq }
+      register: download_okd
 
     - name: Extract OKD binaries (oc, kubectl, openshift-install) to /usr/local/bin
+      when: download_okd.changed
       unarchive:
         src: "{{ item.src }}"
         dest: /usr/local/bin
@@ -155,15 +159,44 @@
         - { src: "tmp/install.tar.gz" }
         - { src: "tmp/client.tar.gz" }
 
+    - name: Read OKD manifest from remote host
+      command: /usr/local/bin/openshift-install coreos print-stream-json
+      register: okd_manifest
+
+    - name: Extract value from JSON
+      ansible.builtin.set_fact:
+        kernel_url: "{{ (okd_manifest.stdout | from_json).architectures.x86_64.artifacts.metal.formats.pxe.kernel.location }}"
+        initramfs_url: "{{ (okd_manifest.stdout | from_json).architectures.x86_64.artifacts.metal.formats.pxe.initramfs.location }}"
+        rootfs_url: "{{ (okd_manifest.stdout | from_json).architectures.x86_64.artifacts.metal.formats.pxe.rootfs.location }}"
+
+    - name: Show the extracted value
+      ansible.builtin.debug:
+        var: "{{ item }}"
+      with_items:
+        - kernel_url
+        - initramfs_url
+        - rootfs_url
+
+    # Let's download the CoreOS OS for this OKD version
+    - name: Download OS files
+      get_url:
+        url: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: 0644
+      with_items:
+        - { src: "{{ kernel_url }}", dest: "/var/lib/tftpboot/fcos/kernel" }
+        - {
+            src: "{{ initramfs_url }}",
+            dest: "/var/lib/tftpboot/fcos/initramfs.img",
+          }
+        - { src: "{{ rootfs_url }}", dest: "/var/www/html/okd4/rootfs.img" }
+
     - name: Copy image files to their proper loocation
       copy:
         remote_src: true
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
       loop:
-        - { src: "tmp/kernel", dest: "/var/lib/tftpboot/fcos" }
-        - { src: "tmp/initramfs.img", dest: "/var/lib/tftpboot/fcos" }
-        - { src: "tmp/rootfs.img", dest: "/var/www/html/okd4" }
         - { src: "/usr/share/syslinux/", dest: "/var/lib/tftpboot" }
 
     # Generating the key that will be used by OKD to communicate will all nodes.
@@ -224,8 +257,8 @@
         path: /var/www/html/okd4/
         recurse: yes
         state: directory
-        owner: apache
-        group: apache
+        owner: ansible
+        group: ansible
         mode: 0755
 
     - name: Change install_dir ownership

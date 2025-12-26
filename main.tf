@@ -1,5 +1,5 @@
 ##############################
-# Creating cloud-init devices.
+# Creating Service machine.
 ##############################
 resource "proxmox_vm_qemu" "cloudinit-nodes" {
   name        = local.service.name
@@ -78,7 +78,12 @@ resource "proxmox_vm_qemu" "pxe-nodes" {
   name        = "okd-${each.key}"
   vmid        = each.value.vmid
   target_node = each.value.target_host
-  clone       = each.value.os
+  # clone       = each.value.os
+  disk {
+    slot    = "ide2"
+    type    = "cdrom"
+    iso     = each.value.iso
+  }
   full_clone  = true
   boot        = "order=scsi0;net0" # "c" by default, which renders the coreos35 clone non-bootable. "cdn" is HD, DVD and Network
   agent       = 0

@@ -3,5 +3,5 @@ jq_file: https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
 user:
   name: ansible
   home: /home/ansible
-pxe_boot_os: pxe-client
+pxe_iso_os: "cephfs:iso/netboot.xyz-efi.iso"
 service_os: centos10-cloudinit
