@@ -53,11 +53,12 @@
 6. Once the openshift-install indicated the bootstrap is done then stop boorstrap VM. Note - I did not remove it from the haproxy
 7. From Service VM: `openshift-install --dir=install_dir/ wait-for install-complete --log-level=info`
 8. Start the worker nodes
-9. From the Service VM:
+9. From the Service VM (use another session in parallel to the openshift-install one):
     1.  `export KUBECONFIG=~/install_dir/auth/kubeconfig`
     2.  Monitor Pending CSRs: `oc get csr | grep Pending`
     3.  Approve pending CSRs: `oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs --no-run-if-empty oc adm certificate approve`
 10. Wait for the openshift-install to complete and get the credentials to log into the console
+11. Service node has a webb interface at https://192.168.251.196:9090/
 
 ## ToDos
 
