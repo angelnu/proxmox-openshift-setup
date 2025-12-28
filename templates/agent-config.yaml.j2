@@ -1,3 +1,5 @@
+---
+{% set cluster = clusters[cluster_id] %}
 apiVersion: v1alpha1
 metadata:
   name: {{ cluster_id }}
@@ -5,7 +7,6 @@ metadata:
 rendezvousIP: {{ clusters[cluster_id].rendezvousIP }}
 bootArtifactsBaseURL: http://{{ service.ip }}:8080/{{ cluster_id }}
 hosts:
-{% set cluster = clusters[cluster_id] %}
 {% for machine in cluster.masters + clusters[cluster_id].workers %}
 {% if machine in cluster.masters %}
   - role: master

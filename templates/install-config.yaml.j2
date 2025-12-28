@@ -1,3 +1,5 @@
+---
+{% set cluster = clusters[cluster_id] %}
 apiVersion: v1
 baseDomain: {{ domain }}
 metadata:
@@ -6,12 +8,12 @@ metadata:
 compute:
 - hyperthreading: Enabled
   name: worker
-  replicas: 3
+  replicas: {{ cluster.workers | length }}
 
 controlPlane:
   hyperthreading: Enabled
   name: master
-  replicas: 3
+  replicas: {{ cluster.masters | length }}
 
 networking:
   clusterNetwork:
@@ -26,9 +28,9 @@ networking:
 platform:
   baremetal:
     apiVips: 
-      - {{ clusters[cluster_id].apiVip }}
+      - {{ cluster.apiVip }}
     ingressVips: 
-      - {{ clusters[cluster_id].ingressVip }}
+      - {{ cluster.ingressVip }}
 
 pullSecret: '{{ pull_secret | default('{"auths":{"fake":{"auth": ""}}}', true) }}'
 sshKey: '{{ ssh_pub_key }}'   

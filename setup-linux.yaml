@@ -128,6 +128,6 @@
 
     - name: Run a set of tasks multiple times
       ansible.builtin.include_tasks: ansible/create_installer_ipxe.yaml
-      loop: "{{ clusters | dict2items }}"
+      loop: "{{ clusters.keys() }}"
       loop_control:
-        loop_var: cluster
+        loop_var: cluster_id

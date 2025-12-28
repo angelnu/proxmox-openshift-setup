@@ -8,8 +8,8 @@ service:
   name: okd-service
   os: centos10-cloudinit
   target_host: pve4
-  ip: 192.168.251.196
-  macaddr: 7A:00:00:00:03:08
-  cores: 4
-  ram: 16384
+  ip: 192.168.5.250
+  macaddr: 7A:00:00:00:03:FF
+  cores: 2
+  ram: 2048
   vmid: 400

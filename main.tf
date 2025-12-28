@@ -33,7 +33,7 @@ resource "proxmox_vm_qemu" "cloudinit-nodes" {
       scsi0 {
         disk {
           storage = "local-lvm"
-          size    = "120G"
+          size    = "20G"
           format  = "raw"
         }
       }

@@ -25,13 +25,13 @@
    ```yaml
    - type: A
      name: okd-service.homelab # okd-service.<domain>
-     value: 192.168.251.196
-   - type: A # Once for each cluster
+     value: 192.168.5.250
+   - type: A # For each cluster
      name: api.prod.homelab  # api.<cluster name>.<domain>
-     value: 192.168.251.18   # apiVip in vars/clusters.yaml 
-   - type: A # Once for each cluster
+     value: 192.168.5.1      # apiVip in vars/clusters.yaml 
+   - type: A # For each cluster
      name: '*.apps.prod.homelab'  # *.apps.<cluster name>.<domain>
-     value: 192.168.251.19        # ingressVip in vars/clusters.yaml 
+     value: 192.168.5.2           # ingressVip in vars/clusters.yaml 
    ```
 
 ## How to install

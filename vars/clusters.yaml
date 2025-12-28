@@ -1,44 +1,49 @@
 clusters:
   prod: # Terraform workspace name
-    loadbalancerIP: 192.168.251.10
-    apiVip: 192.168.251.18
-    ingressVip: 192.168.251.19
-    rendezvousIP: 192.168.251.11
+    apiVip: 192.168.5.1
+    ingressVip: 192.168.5.2
+    rendezvousIP: 192.168.5.10
     masters:
-      - ip: 192.168.251.11
+      - ip: 192.168.5.10
         target_host: pve1
-        macaddr: 7A:00:00:00:03:11
+        macaddr: 7A:00:00:00:03:10
         cores: 4
         ram: 16384
         vmid: 401
-      - ip: 192.168.251.12
+      - ip: 192.168.5.11
         target_host: pve2
-        macaddr: 7A:00:00:00:03:12
+        macaddr: 7A:00:00:00:03:11
         cores: 4
         ram: 16384
         vmid: 402
-      - ip: 192.168.251.13
+      - ip: 192.168.5.12
         target_host: pve3
-        macaddr: 7A:00:00:00:03:13
+        macaddr: 7A:00:00:00:03:12
         cores: 4
         ram: 16384
         vmid: 403
     workers:
-      - ip: 192.168.251.14
+      - ip: 192.168.5.13
         target_host: pve1
-        macaddr: 7A:00:00:00:03:14
+        macaddr: 7A:00:00:00:03:13
         cores: 4
         ram: 16384
         vmid: 404
-      - ip: 192.168.251.15
+      - ip: 192.168.5.14
         target_host: pve2
-        macaddr: 7A:00:00:00:03:15
+        macaddr: 7A:00:00:00:03:14
         cores: 4
         ram: 16384
         vmid: 405
-      - ip: 192.168.251.16
+      - ip: 192.168.5.15
         target_host: pve3
-        macaddr: 7A:00:00:00:03:16
+        macaddr: 7A:00:00:00:03:15
         cores: 4
         ram: 16384
         vmid: 406
+      - ip: 192.168.5.16
+        target_host: pve4
+        macaddr: 7A:00:00:00:03:16
+        cores: 4
+        ram: 16384
+        vmid: 407
