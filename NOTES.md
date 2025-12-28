@@ -65,7 +65,7 @@
 
 4. Next steps:
    - OKD console is available at https://console-openshift-console.apps.prod.homelab
-     - you can connect with user `kubeadm` and the password from the previous step
+     - you can connect with user `kubeadmin` and the password from the previous step
      - credentials (user and password) stored in the service VM at `/home/ansible/clusters/prod/install_dir/auth`
    - Service node has a webb interface at https://192.168.251.196:9090/ (or https://okd-service.homelab - replace homelab with your domain)
 
