@@ -2,17 +2,14 @@
 
 ## Preparation
 
-1. Download `pxe` ISO
-   1. download the iPXE bootloader as ISO
-   2. update [pxe_iso_os](vars/main.yaml)
-2. Create `centos10-cloudinit` VM
+1. Create `centos10-cloudinit` VM
    1. create empty VM without any disk
    2. into Proxmox with the VM: wget qcow2 from https://cloud.centos.org/centos/10-stream/x86_64/images/
    3. detach and delete disk in existing template (if you are updating the template)
    4. `qm importdisk <VM id> centos.qcow2 local-lvm`
    5. `qm set <VM id> --scsihw virtio-scsi-pci --scsi0 local-lvm:vm-<VM id>-disk-0 
    6. make the VM a template
-3. Create secrets.auto.tfvars
+2. Create secrets.auto.tfvars
 
    ```ini
    api_url                = "https://pve1.angelnu.com:8006/api2/json"
@@ -22,8 +19,8 @@
    ansible_ssh_public_key = "public key to ssh into service VM"
    ```
 
-4. Adjust other settings into the [vars folder](vars)
-5. Create following DNS records:
+3. Adjust other settings into the [vars folder](vars)
+4. Create following DNS records:
 
    ```yaml
    - type: A

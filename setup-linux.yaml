@@ -18,11 +18,9 @@
         state: present
       vars:
         packages:
-          - httpd # To host files for IPXE
+          - httpd # To host files for IPXE or Proxmox
           - kea # replaces old ISC DHCP server
           - nmstate # for openshift-installer to validate network config in agente-config.yaml
-      notify:
-        - Enable services
 
     - name: Enable services
       service:
@@ -35,10 +33,6 @@
     - name: set timezone to Europe/Brussels
       timezone:
         name: Europe/Brussels
-
-    - name: No SELinux, thanks
-      selinux:
-        state: disabled
 
     - name: Create directories
       file:
@@ -96,6 +90,12 @@
       loop:
         - { src: "tmp/install.tar.gz" }
         - { src: "tmp/client.tar.gz" }
+
+    - name: Remove generated cluster install_dirs when new installer was fetched
+      when: download_okd.changed
+      ansible.builtin.file:
+        path: clusters
+        state: absent
 
     # Generating the key that will be used by OKD to communicate will all nodes.
     - name: keygen

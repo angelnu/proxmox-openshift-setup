@@ -74,21 +74,35 @@ resource "proxmox_vm_qemu" "cloudinit-nodes" {
 ###################################
 # Creating all PXE booting devices.
 ###################################
+
+resource "proxmox_virtual_environment_download_file" "okd_agent_iso" {
+  count = (terraform.workspace == "default" || local.main.ipxe.enabled ) ? 0 : 1
+  content_type = "iso"
+  datastore_id = "cephfs"
+  node_name    = "pve1"
+  provider = proxmox-bpg
+  url          = format("http://%s:8080/%s/agent.x86_64.iso", local.main.service.ip ,terraform.workspace)
+  file_name = format("okd-agent-%s.iso", terraform.workspace)
+}
+
 resource "proxmox_vm_qemu" "pxe-nodes" {
   for_each    = local.all_pxe_nodes
   name        = format("%s-%s-%s", var.vm_name_prefix, terraform.workspace, each.key)
   vmid        = each.value.vmid
   target_node = each.value.target_host
-  # clone       = each.value.os
-  disk {
-    slot    = "ide2"
-    type    = "cdrom"
-    iso     = each.value.iso
+  
+  dynamic "disk" {
+    for_each = local.main.ipxe.enabled  ? [] : [1]
+    content {
+        slot    = "ide2"
+        type    = "cdrom"
+        iso     = format("cephfs:iso/%s", proxmox_virtual_environment_download_file.okd_agent_iso[0].file_name)
+    }
   }
-  full_clone  = true
-  boot        = "order=scsi0;net0" # "c" by default, which renders the coreos35 clone non-bootable. "cdn" is HD, DVD and Network
+  
+  boot        = format("order=scsi0;%s", local.main.ipxe.enabled  ? "net0" : "ide2")
   agent       = 0
-  tags        = "okd"
+  tags        = format("okd,okd-%s",terraform.workspace)
   vm_state    = each.value.boot # start once created
 
   cpu {

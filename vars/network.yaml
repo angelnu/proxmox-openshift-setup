@@ -3,7 +3,6 @@ domain: angelnu.com
 resolver: 192.168.2.1
 bridge: vmbr0
 vlan: 251
-home_subnet: 192.168.0.0/19
 lab_cidr: 192.168.251.0/24
 network_type: OVNKubernetes #Cilium
 lab_subnet: 24

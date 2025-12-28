@@ -27,7 +27,6 @@ locals {
       ip          = node.ip
       macaddr     = node.macaddr # Private MAC address. 
       vmid        = node.vmid
-      iso         = local.main.pxe_iso_os
       boot        = "started"
     }
   }
@@ -41,7 +40,6 @@ locals {
       ip          = node.ip
       macaddr     = node.macaddr # Private MAC address. 
       vmid        = node.vmid
-      iso         = local.main.pxe_iso_os
       boot        = "started"
     }
   }

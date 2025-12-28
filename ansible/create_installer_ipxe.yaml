@@ -6,7 +6,7 @@
   loop:
     - clusters/{{ cluster.key }}
 
-- name: Cluster {{ cluster.key }} - Create KEA (DHCP Server) configuration
+- name: Cluster {{ cluster.key }} - Create openshift-install configuration
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -27,16 +27,19 @@
   register: okd_installer_config_files
 
 # Let's create the proper OKD installation files (ignition, manifests, ...)
-- name: Cluster {{ cluster.key }} - Create the install files
+- name: Cluster {{ cluster.key }} - Run openshift-installer
   when: okd_installer_config_files.changed
   shell: |
     cd clusters/{{ cluster.key }}
-    rm -rf install_dir
-    mkdir install_dir
-    cp install-config.yaml agent-config.yaml install_dir
-    openshift-install agent create pxe-files --dir=install_dir/
+    rm -rf {{ item.prefix }}-install-dir
+    mkdir {{ item.prefix }}-install-dir
+    cp install-config.yaml agent-config.yaml {{ item.prefix }}-install-dir
+    openshift-install agent create {{ item.cmd }} --dir={{ item.prefix }}-install-dir
   environment:
     PATH: "/usr/local/bin:{{ lookup('env', 'PATH') }}"
+  loop:
+    - { cmd: "image", prefix: "iso" }
+    - { cmd: "pxe-files", prefix: "ipxe" }
   register: installer_task
 
 # Make these files available on the Web server
@@ -45,5 +48,6 @@
   become: true
   shell: |
     rm -rf /var/www/html/{{ cluster.key }}
-    cp -Rl clusters/{{ cluster.key }}/install_dir/boot-artifacts /var/www/html/{{ cluster.key }}
+    cp -R clusters/{{ cluster.key }}/ipxe-install-dir/boot-artifacts /var/www/html/{{ cluster.key }}
+    cp clusters/{{ cluster.key }}/iso-install-dir/agent.x86_64.iso /var/www/html/{{ cluster.key }}/
     chmod -R 755 /var/www/html/{{ cluster.key }}
