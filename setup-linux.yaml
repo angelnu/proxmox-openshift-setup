@@ -11,15 +11,13 @@
   become_method: sudo
   gather_facts: no
   tasks:
-    #Setting up DNS, HTTPD, HA Proxy, TFTPD on CentOS 10
-    - name: Install packages
+    - name: Install common packages
       yum:
         name: "{{ packages }}"
         state: present
       vars:
         packages:
           - httpd # To host files for IPXE or Proxmox
-          - kea # replaces old ISC DHCP server
           - nmstate # for openshift-installer to validate network config in agente-config.yaml
 
     - name: Enable services
@@ -27,7 +25,6 @@
         name: "{{ item }}"
         state: started
       with_items:
-        - kea-dhcp4
         - httpd
 
     - name: set timezone to Europe/Brussels
@@ -44,7 +41,20 @@
         - { name: tmp, owner: ansible, mode: 0755 }
         - { name: /etc/dhcp, owner: root, mode: 0755 }
 
-    - name: Create KEA (DHCP Server) configuration
+    - name: Install KEA (DHCP) packages if ipxe boot
+      yum:
+        name:
+          - kea # replaces old ISC DHCP server
+        state: '{{ "present" if ipxe.enabled else "absent" }}'
+
+    - name: Enable KEA (DHCP Server) service if ipxe boot
+      when: ipxe.enabled
+      service:
+        name: kea-dhcp4
+        state: started
+
+    - name: Create KEA (DHCP Server) configuration if ipxe boot
+      when: ipxe.enabled
       template:
         src: templates/kea.yaml.j2
         dest: /etc/kea/kea-dhcp4.conf
