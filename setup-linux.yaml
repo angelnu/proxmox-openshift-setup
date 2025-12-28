@@ -3,10 +3,10 @@
   hosts: service
   vars_files:
     - vars/main.yaml
-    - vars/nodes.yaml
+    - vars/clusters.yaml
     - vars/network.yaml
   handlers:
-    - import_tasks: handlers/main.yaml
+    - import_tasks: ansible/handlers.yaml
   become: yes
   become_method: sudo
   gather_facts: no
@@ -18,14 +18,19 @@
         state: present
       vars:
         packages:
-          - bind # "bind" for CentOS, "bind9" for Ubuntu
-          - bind-utils # "bind-utils" for CentOS, "bind9-utils" for Ubuntu
-          - httpd
-          - haproxy
-          - tftp-server
+          - httpd # To host files for IPXE
           - kea # replaces old ISC DHCP server
-          - syslinux
-          - git
+          - nmstate # for openshift-installer to validate network config in agente-config.yaml
+      notify:
+        - Enable services
+
+    - name: Enable services
+      service:
+        name: "{{ item }}"
+        state: started
+      with_items:
+        - kea-dhcp4
+        - httpd
 
     - name: set timezone to Europe/Brussels
       timezone:
@@ -35,11 +40,6 @@
       selinux:
         state: disabled
 
-    - name: Enable TFTPd
-      service:
-        name: tftp
-        enabled: yes
-
     - name: Create directories
       file:
         path: "{{ item.name }}"
@@ -47,93 +47,31 @@
         owner: "{{ item.owner }}"
         mode: 0755 # For some reason, item.mode converts 0755 into 493 ... weird
       loop:
-        - {
-            name: /var/www/html/okd4,
-            owner: ansible,
-            group: ansible,
-            mode: 0755,
-          }
-        - { name: /etc/named/zones, owner: root, mode: 0755 }
         - { name: tmp, owner: ansible, mode: 0755 }
-        - { name: install_dir, owner: ansible, mode: 0755 }
-        - { name: /var/lib/tftpboot/fcos, owner: root, mode: 0755 }
-        - { name: /var/lib/tftpboot/pxelinux.cfg, owner: root, mode: 0755 }
-        - { name: /var/nfsshare/registry, owner: nobody, mode: 0777 }
         - { name: /etc/dhcp, owner: root, mode: 0755 }
-    #       - { name: /etc/haproxy,                   owner: root,        mode: 0755 }
 
-    # Need this here, just to make sure we have a working name resolution for packages installation
-    - name: Overwrite resolv.conf
+    - name: Create KEA (DHCP Server) configuration
       template:
-        src: templates/resolv.conf.j2
-        dest: /etc/resolv.conf
+        src: templates/kea.yaml.j2
+        dest: /etc/kea/kea-dhcp4.conf
         owner: root
-        mode: 0644
-
-    - name: Fix NetworkManager.cnf
-      lineinfile:
-        path: /etc/NetworkManager/NetworkManager.conf
-        insertafter: "[main]"
-        line: "dns=none"
+        mode: 0640
       notify:
-        - Restart DNS
+        - Restart DHCP
 
-    # Build DNS configuration
-    - name: Create config files
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        owner: root
-        mode: 0644
-      with_items:
-        - { src: templates/dns-forward.j2, dest: /etc/named/zones/db.forward }
-        - { src: templates/dns-reverse.j2, dest: /etc/named/zones/db.reverse }
-        - { src: templates/named.conf.j2, dest: /etc/named.conf }
-        - { src: templates/kea.yaml.j2, dest: /etc/kea/kea-dhcp4.conf }
-        - {
-            src: templates/named.conf.local.j2,
-            dest: /etc/named/named.conf.local,
-          }
-        - { src: templates/haproxy.cfg.j2, dest: /etc/haproxy/haproxy.cfg }
-        - { src: templates/registry_pv.yaml.j2, dest: tmp }
-        - {
-            src: templates/install-config.yaml.j2,
-            dest: install_dir/install-config.yaml,
-          }
-      notify:
-        - Restart DNS
-
-    # Run it more than once, and it'll add 80 ... and 80 ...
-    - name: change httpd port
+    - name: change httpd (Web Server) port
       lineinfile:
         path: /etc/httpd/conf/httpd.conf
         regexp: "^Listen.*80"
         line: "Listen 8080"
         backup: yes
+      notify:
+        - Restart WebServer
 
-    # And don't forget to restart it
-    - name: enable services
-      systemd:
-        name: "{{ item }}"
-        enabled: yes
-        state: restarted
-      with_items:
-        - haproxy
-        - httpd
-        - tftp
-        - named
-        - kea-dhcp4
-
-- name: Setup OKD services
+- name: Fetch OKD installer
   hosts: service
   vars_files:
-    - vars/main.yaml
     - vars/okd-version.yaml
-    - vars/nodes.yaml
-    - vars/network.yaml
-  handlers:
-    - import_tasks: handlers/main.yaml
-  become: yes
   become_method: sudo
   gather_facts: no
   tasks:
@@ -146,11 +84,11 @@
       with_items:
         - { src: "{{ okd.client }}", dest: tmp/client.tar.gz }
         - { src: "{{ okd.install }}", dest: tmp/install.tar.gz }
-        - { src: "{{ jq_file }}", dest: tmp/jq }
       register: download_okd
 
     - name: Extract OKD binaries (oc, kubectl, openshift-install) to /usr/local/bin
       when: download_okd.changed
+      become: yes
       unarchive:
         src: "{{ item.src }}"
         dest: /usr/local/bin
@@ -159,136 +97,27 @@
         - { src: "tmp/install.tar.gz" }
         - { src: "tmp/client.tar.gz" }
 
-    - name: Read OKD manifest from remote host
-      command: /usr/local/bin/openshift-install coreos print-stream-json
-      register: okd_manifest
-
-    - name: Extract value from JSON
-      ansible.builtin.set_fact:
-        kernel_url: "{{ (okd_manifest.stdout | from_json).architectures.x86_64.artifacts.metal.formats.pxe.kernel.location }}"
-        initramfs_url: "{{ (okd_manifest.stdout | from_json).architectures.x86_64.artifacts.metal.formats.pxe.initramfs.location }}"
-        rootfs_url: "{{ (okd_manifest.stdout | from_json).architectures.x86_64.artifacts.metal.formats.pxe.rootfs.location }}"
-
-    - name: Show the extracted value
-      ansible.builtin.debug:
-        var: "{{ item }}"
-      with_items:
-        - kernel_url
-        - initramfs_url
-        - rootfs_url
-
-    # Let's download the CoreOS OS for this OKD version
-    - name: Download OS files
-      get_url:
-        url: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        mode: 0644
-      with_items:
-        - { src: "{{ kernel_url }}", dest: "/var/lib/tftpboot/fcos/kernel" }
-        - {
-            src: "{{ initramfs_url }}",
-            dest: "/var/lib/tftpboot/fcos/initramfs.img",
-          }
-        - { src: "{{ rootfs_url }}", dest: "/var/www/html/okd4/rootfs.img" }
-
-    - name: Copy image files to their proper loocation
-      copy:
-        remote_src: true
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-      loop:
-        - { src: "/usr/share/syslinux/", dest: "/var/lib/tftpboot" }
-
     # Generating the key that will be used by OKD to communicate will all nodes.
     - name: keygen
       community.crypto.openssh_keypair:
-        path: /home/ansible/.ssh/ssh_okd
-        owner: ansible
+        path: .ssh/ssh_okd
 
-    - name: get remote file contents
-      command: "cat '{{ user.home }}'/.ssh/ssh_okd.pub"
-      register: key
+- name: Create installer iPXE for each cluster
+  hosts: service
+  vars_files:
+    - vars/clusters.yaml
+    - vars/main.yaml
+    - vars/network.yaml
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Read ssh public key
+      command: "cat .ssh/ssh_okd.pub"
+      register: ssh_pub_key_task
+      changed_when: false
 
-    - name: Add SSH key to install-config.yaml
-      vars:
-        sshkey: "{{ key.stdout }}"
-      lineinfile:
-        path: /home/ansible/install_dir/install-config.yaml
-        regexp: "^sshKey:"
-        line: "sshKey: '{{ sshkey }}' "
-        backup: yes
-
-    # Get the pull secret from ~/pull_secret.txt. If you don't have one, create the file and add '{"auths":{"fake":{"auth": "bar"}}}' as the content
-    - name: Add Pull Secret to install-config.yaml
-      when: query('ansible.builtin.fileglob', './files/pull_secret.txt') | length > 0
-      vars:
-        pull: "{{ lookup('file', './files/pull_secret.txt') }}"
-      lineinfile:
-        path: /home/ansible/install_dir/install-config.yaml
-        regexp: "^pullSecret:"
-        # To make sure you don't run into escaping quotes, double quotes...
-        #just make sure your pull secret in the file is between single quotes, and double quotes everywhere else :!env_var
-        # For instance: '{"auths":{"fake":{"auth": "bar"}}}'
-        line: "pullSecret: {{ pull }}"
-        backup: yes
-
-    # Let's create the proper OKD installation files (ignition, manifests, ...)
-    - name: Create the install files
-      shell: |
-        /usr/local/bin/openshift-install create manifests --dir=/home/ansible/install_dir/
-        cp /home/ansible/install_dir/install-config.yaml /home/ansible/install-config.back
-        sed -i 's/mastersSchedulable: true/mastersSchedulable: False/' /home/ansible/install_dir/manifests/cluster-scheduler-02-config.yml
-
-    - name: Download Cilium manifests if we're configuring Cilium
-      shell: |
-        git clone https://github.com/cilium/cilium-olm.git tmp/cilium-olm
-        cp tmp/cilium-olm/manifests/cilium.v1.13.0/* install_dir/manifests/
-      when: network_type == "Cilium"
-
-    - name: Create ignition files
-      shell: /usr/local/bin/openshift-install create ignition-configs --dir=/home/ansible/install_dir/
-
-    # Make these files available on the Web server
-    - name: Copy all files to www directories
-      shell: cp -R /home/ansible/install_dir/* /var/www/html/okd4/
-
-    - name: Change www ownership
-      file:
-        path: /var/www/html/okd4/
-        recurse: yes
-        state: directory
-        owner: ansible
-        group: ansible
-        mode: 0755
-
-    - name: Change install_dir ownership
-      file:
-        path: /home/ansible/install_dir
-        recurse: yes
-        state: directory
-        owner: ansible
-        group: ansible
-        mode: 0755
-
-    - name: create bootstrap PXE files
-      template:
-        src: templates/pxe-bootstrap.j2
-        dest: "/var/lib/tftpboot/pxelinux.cfg/01-{{ bootstrap.macaddr | lower | regex_replace (':', '-')}}" # lower ?
-        mode: 0555
-
-    - name: create master PXE files
-      template:
-        src: templates/pxe-master.j2
-        dest: "/var/lib/tftpboot/pxelinux.cfg/01-{{ item.macaddr | lower | regex_replace (':', '-')}}" # lower ?
-        mode: 0555
-      loop: "{{ masters | flatten(levels=1) }}"
-
-    - name: create worker PXE files
-      template:
-        src: templates/pxe-worker.j2
-        dest: "/var/lib/tftpboot/pxelinux.cfg/01-{{ item.macaddr | lower | regex_replace (':', '-')}}" # lower ?
-        mode: 0555
-      loop: "{{ workers | flatten(levels=1) }}"
-      notify:
-        - Start TFTP
-        # - Stop FW
+    - name: Run a set of tasks multiple times
+      ansible.builtin.include_tasks: ansible/create_installer_ipxe.yaml
+      loop: "{{ clusters | dict2items }}"
+      loop_control:
+        loop_var: cluster

@@ -4,4 +4,12 @@ user:
   name: ansible
   home: /home/ansible
 pxe_iso_os: "cephfs:iso/netboot.xyz-efi.iso"
-service_os: centos10-cloudinit
+service:
+  name: okd-service
+  os: centos10-cloudinit
+  target_host: pve4
+  ip: 192.168.251.196
+  macaddr: 7A:00:00:00:03:08
+  cores: 4
+  ram: 16384
+  vmid: 400

@@ -27,43 +27,52 @@
 
    ```yaml
    - type: A
-     name: okd-service.homelab
+     name: okd-service.homelab # okd-service.<domain>
      value: 192.168.251.196
-   - type: CNAME
-     name: '*.okd.homelab'
-     value: okd-service.homelab
-   - type: CNAME
-     name: '*.apps.okd.homelab'
-     value: okd-service.homelab
+   - type: A # Once for each cluster
+     name: api.prod.homelab  # api.<cluster name>.<domain>
+     value: 192.168.251.18   # apiVip in vars/clusters.yaml 
+   - type: A # Once for each cluster
+     name: '*.apps.prod.homelab'  # *.apps.<cluster name>.<domain>
+     value: 192.168.251.19        # ingressVip in vars/clusters.yaml 
    ```
 
 ## How to install
 
-1. Create virtual machine
+1. Create service virtual machine
 
    ```shell
-   terraform init
+   terraform init  # Only first time
+   terraform workspace select default
+   terraform apply
+   ssh ansible@192.168.251.196 # To accept ssh key
+   ansible-playbook setup-linux.yaml
+   ```
+
+2. Create virtual machines for cluster prod - they will automatically install
+
+   ```shell
+   terraform workspace create prod # Only first time
+   terraform workspace select prod
    terraform apply
    ```
 
-2. `ansible-playbook setup-linux.yaml`
-3. Start bootstrap VM
-4. From Service VM: `openshift-install --dir=install_dir/ wait-for bootstrap-complete --log-level=info`
-5. Start master node VMs
-6. Once the openshift-install indicated the bootstrap is done then stop boorstrap VM. Note - I did not remove it from the haproxy
-7. From Service VM: `openshift-install --dir=install_dir/ wait-for install-complete --log-level=info`
-8. Start the worker nodes
-9. From the Service VM (use another session in parallel to the openshift-install one):
-    1.  `export KUBECONFIG=~/install_dir/auth/kubeconfig`
-    2.  Monitor Pending CSRs: `oc get csr | grep Pending`
-    3.  Approve pending CSRs: `oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs --no-run-if-empty oc adm certificate approve`
-10. Wait for the openshift-install to complete and get the credentials to log into the console
-11. Service node has a webb interface at https://192.168.251.196:9090/
+3. Wait for cluster to install - this takes 30-60 minutes for my cluster. The following command logs install status and prints credentials
+
+   ```shell
+   ssh ansible@192.168.251.196 openshift-install agent wait-for install-complete --dir=clusters/prod/install_dir
+   ```
+
+4. Next steps:
+   - OKD console is available at https://console-openshift-console.apps.prod.homelab
+     - you can connect with user `kubeadm` and the password from the previous step
+     - credentials (user and password) stored in the service VM at `/home/ansible/clusters/prod/install_dir/auth`
+   - Service node has a webb interface at https://192.168.251.196:9090/ (or https://okd-service.homelab - replace homelab with your domain)
 
 ## ToDos
 
-1. Automate further:
-2. Install flux
-3. Open to outside (install cloudflare operator)
-4. Check I can install 2 clusters in parallel (one for test)
-5. Check how to recover cluster
+- [x] Automate further:
+- [ ] Install flux
+- [x] Open to outside (install cloudflare operator)
+- [x] Check I can install 2 clusters in parallel (one for test)
+- [ ] Check how to recover cluster

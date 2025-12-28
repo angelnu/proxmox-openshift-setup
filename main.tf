@@ -2,6 +2,7 @@
 # Creating Service machine.
 ##############################
 resource "proxmox_vm_qemu" "cloudinit-nodes" {
+  count = terraform.workspace == "default" ? 1 : 0
   name        = local.service.name
   vmid        = local.service.vmid
   target_node = local.service.target_host
@@ -75,7 +76,7 @@ resource "proxmox_vm_qemu" "cloudinit-nodes" {
 ###################################
 resource "proxmox_vm_qemu" "pxe-nodes" {
   for_each    = local.all_pxe_nodes
-  name        = "okd-${each.key}"
+  name        = format("%s-%s-%s", var.vm_name_prefix, terraform.workspace, each.key)
   vmid        = each.value.vmid
   target_node = each.value.target_host
   # clone       = each.value.os
@@ -127,12 +128,10 @@ resource "proxmox_vm_qemu" "pxe-nodes" {
 }
 
 resource "local_file" "ansible_inventory" {
+  count = terraform.workspace == "default" ? 1 : 0
   content = templatefile("templates/hosts.tmpl",
     {
       service_ip   = local.service.ip
-      bootstrap_ip = local.bootstrap.ip
-      masters      = [for j in local.masters : j.ip]
-      workers      = [for j in local.workers : j.ip]
     }
   )
   filename = "inventory/hosts.ini"

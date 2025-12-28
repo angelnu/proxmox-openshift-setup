@@ -1,7 +1,7 @@
 apiVersion: v1
 baseDomain: {{ domain }}
 metadata:
-  name: {{ clusterid }}
+  name: {{ cluster_id }}
 
 compute:
 - hyperthreading: Enabled
@@ -17,12 +17,18 @@ networking:
   clusterNetwork:
   - cidr: 10.128.0.0/14 
     hostPrefix: 23 
+  machineNetwork:
+  - cidr: {{ lab_cidr }}
   networkType: OVNKubernetes
   serviceNetwork: 
   - 172.30.0.0/16
 
 platform:
-  none: {}
+  baremetal:
+    apiVips: 
+      - {{ clusters[cluster_id].apiVip }}
+    ingressVips: 
+      - {{ clusters[cluster_id].ingressVip }}
 
-pullSecret: '{"auths":{"fake":{"auth": ""}}}'
-sshKey: 'ssh-ed25519 AAAA...'   
+pullSecret: '{{ pull_secret | default('{"auths":{"fake":{"auth": ""}}}', true) }}'
+sshKey: '{{ ssh_pub_key }}'   

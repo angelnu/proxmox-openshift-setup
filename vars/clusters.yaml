@@ -1,0 +1,44 @@
+clusters:
+  prod: # Terraform workspace name
+    loadbalancerIP: 192.168.251.10
+    apiVip: 192.168.251.18
+    ingressVip: 192.168.251.19
+    rendezvousIP: 192.168.251.11
+    masters:
+      - ip: 192.168.251.11
+        target_host: pve1
+        macaddr: 7A:00:00:00:03:11
+        cores: 4
+        ram: 16384
+        vmid: 401
+      - ip: 192.168.251.12
+        target_host: pve2
+        macaddr: 7A:00:00:00:03:12
+        cores: 4
+        ram: 16384
+        vmid: 402
+      - ip: 192.168.251.13
+        target_host: pve3
+        macaddr: 7A:00:00:00:03:13
+        cores: 4
+        ram: 16384
+        vmid: 403
+    workers:
+      - ip: 192.168.251.14
+        target_host: pve1
+        macaddr: 7A:00:00:00:03:14
+        cores: 4
+        ram: 16384
+        vmid: 404
+      - ip: 192.168.251.15
+        target_host: pve2
+        macaddr: 7A:00:00:00:03:15
+        cores: 4
+        ram: 16384
+        vmid: 405
+      - ip: 192.168.251.16
+        target_host: pve3
+        macaddr: 7A:00:00:00:03:16
+        cores: 4
+        ram: 16384
+        vmid: 406

@@ -24,59 +24,15 @@
 		"option-data": [
 			{
 				"name": "domain-name-servers",
-				"data": "{{ service.ip }}"
+				"data": "{{ resolver }}"
 			},
 			{
 				"name": "domain-name",
-				"data": "{{ clusterid }}.{{ domain }}"
+				"data": "{{ domain }}"
 			},
 			{
 				"name": "domain-search",
-				"data": "{{ clusterid }}.{{ domain }}"
-			}
-		],
-		"client-classes": [
-			{
-				"name": "iPXE",
-				"test": "option[175].exists",
-				"option-data": [
-					{
-						"name": "tftp-server-name",
-						"data": "{{ service.ip }}"
-					},
-					{
-						"name": "boot-file-name",
-						"data": "tftp://{{ service.ip }}/pxelinux.0"
-					}
-				]
-			},
-			{
-				"name": "UEFI clients",
-				"test": "option[93].hex == 0x0007 and not option[175].exists",
-				"option-data": [
-					{
-						"name": "tftp-server-name",
-						"data": "{{ service.ip }}"
-					},
-					{
-						"name": "boot-file-name",
-						"data": "/pxelinux.0"
-					}
-				]
-			},
-			{
-				"name": "BIOS clients",
-				"test": "option[93].hex == 0x0000 and not option[175].exists",
-				"option-data": [
-					{
-						"name": "tftp-server-name",
-						"data": "{{ service.ip }}"
-					},
-					{
-						"name": "boot-file-name",
-						"data": "/pxelinux.0"
-					}
-				]
+				"data": "{{ domain }}"
 			}
 		],
 		"subnet4": [
@@ -95,23 +51,16 @@
 					}
 				],
                 "reservations": [
-                    {% for machine in  masters+workers %}
+                    {% for cluster_name, cluster in clusters.items() %}
+					{% for machine in  cluster.masters + cluster.workers %}
                     {
-                    "hostname": "{{ machine.name }}",
+                    "hostname": "{{ cluster_name }}-{{ loop.index0 }}",
                     "hw-address": "{{ machine.macaddr }}",
-                    "ip-address": "{{ machine.ip }}"
+                    "ip-address": "{{ machine.ip }}",
+                    "boot-file-name": "http://{{ service.ip }}:8080/{{ cluster_name }}/agent.x86_64.ipxe"
                     },
                     {% endfor %}
-                    {
-                    "hostname": "{{ service.name }}",
-                    "hw-address": "{{ service.macaddr }}",
-                    "ip-address": "{{ service.ip }}"
-                    },
-                    {
-                    "hostname": "{{ bootstrap.name }}",
-                    "hw-address": "{{ bootstrap.macaddr }}",
-                    "ip-address": "{{ bootstrap.ip }}"
-                    }
+					{% endfor %}
                 ]
 			}
 		],

@@ -1,9 +1,0 @@
-zone "{{ domain }}" {
-    type master;
-    file "/etc/named/zones/db.forward"; 
-};
-
-zone "{{ service.ip.split('.')[2] }}.{{ service.ip.split('.')[1] }}.{{service.ip.split('.')[0] }}.in-addr.arpa" {
-    type master;
-    file "/etc/named/zones/db.reverse";  
-};
