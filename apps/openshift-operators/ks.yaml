@@ -12,6 +12,8 @@ spec:
       app.kubernetes.io/name: *app
   path: ./apps/openshift-operators/app
   prune: true
+  dependsOn:
+    - name: openshift-marketplace
   sourceRef:
     kind: GitRepository
     name: cluster-repository
