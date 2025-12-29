@@ -13,7 +13,7 @@ spec:
   path: ./apps/openshift-config/app
   prune: true
   dependsOn:
-    - name: vars
+    - name: cluster-vars
   sourceRef:
     kind: GitRepository
     name: cluster-repository
