@@ -12,6 +12,8 @@ spec:
       app.kubernetes.io/name: *app
   path: ./apps/openshift-config/app
   prune: true
+  dependsOn:
+    - name: vars
   sourceRef:
     kind: GitRepository
     name: cluster-repository
