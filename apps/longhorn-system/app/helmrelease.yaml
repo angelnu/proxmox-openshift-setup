@@ -23,6 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    global:
+      imageRegistry: docker.io
     openshift:
       enabled: true
       ui:
