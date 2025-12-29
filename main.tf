@@ -72,7 +72,7 @@ resource "proxmox_vm_qemu" "cloudinit-nodes" {
 }
 
 ###################################
-# Creating all PXE booting devices.
+# Creating all PXE/ISO booting devices.
 ###################################
 
 resource "proxmox_virtual_environment_download_file" "okd_agent_iso" {

@@ -1,13 +1,12 @@
 ---
-
-# This example uses YAML anchors which allows reuse of multiple keys 
+# This example uses YAML anchors which allows reuse of multiple keys
 # without having to repeat yourself.
 # Also see https://github.com/Mic92/dotfiles/blob/master/nixos/.sops.yaml
 # for a more complex example.
 keys:
   age:
-  - &cluster_age_key age15gheadx06yqv700xe3g3ra9x85fn9xqu9chqt6fhh2caevpcgsrqlg6tlx
-  - &angel_age_key age19zycawkart4t4l7a238w0n2w0rmw6anjadwv9yr3ce3js4dz3dcqqgkvsw
+    - &cluster_age_key age1wdapsm2nw9pr0nmak892gqwat44uhay7d7z5fqtwgsmm6ecatggsfql3yx
+    - &angel_age_key age19zycawkart4t4l7a238w0n2w0rmw6anjadwv9yr3ce3js4dz3dcqqgkvsw
 creation_rules:
   - path_regex: .+secret(\.sops)?\.ya?ml
     input_type: yaml
@@ -23,4 +22,3 @@ creation_rules:
 stores:
   yaml:
     indent: 2
-

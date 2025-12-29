@@ -4,7 +4,7 @@
 2. Adjust the `path` at [cluster.yaml](flux/config/vars.yaml) to point to the `clusters/<new cluster>` folder
 3. Adjust the `path` at [vars.yaml](flux/config/vars.yaml) to point to the `clusters/<new cluster>` folder
 4. Create a new Age secret for the cluster
-   1. `age-keygen` and copy its output
+   1. `age-keygen` and copy its output into `flux/<cluster>/vars/sops-age.secret.sops.yaml`
    2. Adjust the `clusters/<cluster>/.sops.yaml`
       1. set `cluster_age_key` to use the age public key
       2. Adjust other authorized users that need to see/edit secrets
@@ -17,9 +17,7 @@
 2. Create the secret in the cluster:
 
        ```shell
-       kubectl create secret generic sops-age \
-       --namespace=flux-system \
-       --from-literal=age.agekey="AGE-SECRET-KEY-......"
+       sops -d clusters/prod/flux/vars/sops-age.secret.sops.yaml|kubectl apply -f -
        ```
-3. `kubectl -n flux-system apply -k clusters/okd/bootstrap`
-4. `kubectl -n flux-system apply -k clusters/okd/flux/config`
+3. `kubectl -n flux-system apply -k clusters/prod/bootstrap`
+4. `kubectl -n flux-system apply -k clusters/prod/flux/config`

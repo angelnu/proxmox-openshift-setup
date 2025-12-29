@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 data:
   # Cluster dependent
-  CLUSTER_NAME: okd
+  CLUSTER_NAME: prod
 
   # Common
   CLUSTER_DOMAIN_CERT: cluster-domain-cert
