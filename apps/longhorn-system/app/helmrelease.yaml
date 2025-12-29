@@ -34,7 +34,8 @@ spec:
     image:
       openshift:
         oauthProxy:
-          repository: quay.io/openshift/origin-oauth-proxy
+          registry: quay.io
+          repository: openshift/origin-oauth-proxy
           tag: 4.20
       defaultBackupStore:
         backupTarget: cifs://nas.home.angelnu.com/NetBackup/longhorn/${CLUSTER_NAME}
