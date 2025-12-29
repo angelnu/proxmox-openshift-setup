@@ -20,7 +20,7 @@ spec:
             - email
           preferredUsername:
             - preferred_username
-        clientID: openshift
+        clientID: okd
         clientSecret:
           name: authentik-secret
         extraScopes:
