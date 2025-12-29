@@ -3,7 +3,7 @@ kind: CatalogSource
 metadata:
   name: okd
 spec:
-  image: quay.io/okderators/catalog-index:latest
+  image: quay.io/okderators/catalog-index:testing-4.20
   displayName: OKD
   publisher: OKD
   sourceType: grpc
