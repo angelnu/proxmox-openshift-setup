@@ -1,7 +1,7 @@
 # Create config for new tenant
 
 1. Copy an existing cluster folder
-2. Adjust the `path` at [cluster.yaml](flux/config/vars.yaml) to point to the `clusters/<new cluster>` folder
+2. Adjust the `path` at [cluster.yaml](flux/config/cluster.yaml) to point to the `clusters/<new cluster>` folder
 3. Adjust the `path` at [vars.yaml](flux/config/vars.yaml) to point to the `clusters/<new cluster>` folder
 4. Create a new Age secret for the cluster
    1. `age-keygen` and copy its output into `flux/<cluster>/vars/sops-age.secret.sops.yaml`
@@ -17,7 +17,7 @@
 2. Create the secret in the cluster:
 
        ```shell
-       sops -d clusters/prod/flux/vars/sops-age.secret.sops.yaml|kubectl apply -f -
+       sops -d clusters/<cluster>/flux/vars/sops-age.secret.sops.yaml|kubectl apply -f -
        ```
-3. `kubectl -n flux-system apply -k clusters/prod/bootstrap`
-4. `kubectl -n flux-system apply -k clusters/prod/flux/config`
+3. `kubectl -n flux-system apply -k clusters/<cluster>/bootstrap`
+4. `kubectl -n flux-system apply -k clusters/<cluster>/flux/config`
