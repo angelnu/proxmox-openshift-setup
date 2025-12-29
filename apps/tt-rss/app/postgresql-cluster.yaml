@@ -50,7 +50,7 @@ spec:
     size: 2Gi
   walStorage:
     # Separate WAL storage is recommended for production to avoid IO contention
-    walSize: 1Gi
+    size: 1Gi
 
   # 4. Database Initialization
   bootstrap:
