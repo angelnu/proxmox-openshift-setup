@@ -4,6 +4,9 @@ metadata:
   name: okd
 spec:
   image: quay.io/okderators/catalog-index:testing-4.20
-  displayName: OKD
-  publisher: OKD
+  displayName: OKDerators
+  publisher: OKDerators
   sourceType: grpc
+  updateStrategy:
+    registryPoll:
+      interval: 10m
