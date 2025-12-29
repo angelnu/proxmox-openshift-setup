@@ -9,6 +9,6 @@ spec:
   url: https://github.com/angelnu/proxmox-openshift-setup.git
   ref:
     # branch: agent
-    tag: production
+    tag: prod
   # secretRef:
   #   name: flux-gitea-token
