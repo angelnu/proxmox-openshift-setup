@@ -3,4 +3,7 @@ kind: OperatorGroup
 metadata:
   name: local-storage-operator
 spec:
-  targetNamespaces: null
+  # selector:
+  #   matchLabels:
+  #     local-storage: "true"
+  upgradeStrategy: Default
