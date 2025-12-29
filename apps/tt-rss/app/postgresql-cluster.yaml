@@ -22,7 +22,7 @@ spec:
   # 1. Continuous Backup to Synology (MinIO)
   backup:
     barmanObjectStore:
-      destinationPath: s3://${S§_NAS_POSTGRES_BUCKET}/
+      destinationPath: s3://${S3_NAS_POSTGRES_BUCKET}/
       endpointURL: "${S3_NAS_URL}"
       s3Credentials:
         accessKeyId:
