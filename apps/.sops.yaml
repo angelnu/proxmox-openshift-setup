@@ -14,7 +14,8 @@ creation_rules:
     encrypted_regex: ^(data|stringData)$
     key_groups:
       - age: &key_groups
-          - *cluster_age_key
+          - *cluster_prod_age_key
+          - *cluster_test_age_key
           - *angel_age_key
   - path_regex: .+secret(\.sops)?\.env
     input_type: env
