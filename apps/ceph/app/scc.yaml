@@ -8,7 +8,7 @@ subjects:
     name: ceph-csi-cephfs-nodeplugin
     namespace: ${MY_NAMESPACE}
   - kind: ServiceAccount
-    name: cceph-csi-cephfs-provisioner
+    name: ceph-csi-cephfs-provisioner
     namespace: ${MY_NAMESPACE}
   - kind: ServiceAccount
     name: ceph-csi-rbd-nodeplugin
