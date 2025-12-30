@@ -57,8 +57,8 @@ spec:
     initdb:
       database: app_db
       owner: app_user
-      secret:
-        name: app-user-credentials
+      # secret:
+      #   name: app-user-credentials
 
   # 5. Monitoring
   monitoring:
