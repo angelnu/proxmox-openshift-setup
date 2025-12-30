@@ -7,10 +7,29 @@ stringData:
   ACCESS_KEY_ID: "${S3_NAS_USERNAME}"
   ACCESS_SECRET_KEY: "${S3_NAS_PASSWORD}"
 ---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: cluster-nas-backup
+spec:
+  retentionPolicy: "30d" # Automatically clean up old backups on the NAS
+  configuration:
+    destinationPath: s3://${S3_NAS_POSTGRES_BUCKET}/
+    endpointURL: "${S3_NAS_URL}"
+    s3Credentials:
+      accessKeyId:
+        name: nas-s3-creds
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: nas-s3-creds
+        key: ACCESS_SECRET_KEY
+    wal:
+      compression: gzip # Compresses logs before sending to NAS
+---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: test
+  name: &ClusterName test
 spec:
   instances: 3 # 1 Primary + 2 Replicas for High Availability
   imageName: ghcr.io/cloudnative-pg/postgresql:16.1
@@ -20,20 +39,11 @@ spec:
   maxSyncReplicas: 1
 
   # 1. Continuous Backup to Synology (MinIO)
-  backup: &backup
-    barmanObjectStore:
-      destinationPath: s3://${S3_NAS_POSTGRES_BUCKET}/
-      endpointURL: "${S3_NAS_URL}"
-      s3Credentials:
-        accessKeyId:
-          name: nas-s3-creds
-          key: ACCESS_KEY_ID
-        secretAccessKey:
-          name: nas-s3-creds
-          key: ACCESS_SECRET_KEY
-      wal:
-        compression: gzip # Compresses logs before sending to NAS
-    retentionPolicy: "30d" # Automatically clean up old backups on the NAS
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: cluster-nas-backup
 
   # 2. Resource Management (Guaranteed QoS)
   # Keeping requests and limits identical prevents OOM kills
@@ -53,9 +63,16 @@ spec:
     size: 1Gi
 
   # 4. Database Initialization
+  externalClusters:
+    - name: *ClusterName
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: cluster-nas-backup
+
   bootstrap:
     recovery:
-      backup:
+      source: *ClusterName
     # initdb:
     #   database: app_db
     #   owner: app_user
