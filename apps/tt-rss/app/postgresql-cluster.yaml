@@ -39,10 +39,10 @@ spec:
   # Keeping requests and limits identical prevents OOM kills
   resources:
     requests:
-      memory: "2Gi"
-      cpu: "1"
+      memory: "128Mi"
+      cpu: "10m"
     limits:
-      memory: "2Gi"
+      memory: "1Gi"
       cpu: "1"
 
   # 3. Storage Configuration
