@@ -7,6 +7,8 @@ metadata:
 data:
   # Cluster dependent
   CLUSTER_NAME: test
+  CLUSTER_EXTERNAL_SUBNET_PREFIX: "192.168.6"
+  CLUSTER_LB_RANGE: "192.168.6.128-192.168.6.192"
 
   # Common
   CLUSTER_DOMAIN_CERT: cluster-domain-cert
