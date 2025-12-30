@@ -9,6 +9,9 @@ spec:
   interval: 10m
   path: ./apps
   prune: true
+  dependsOn:
+    - name: cluster-vars
+    - name: cluster-vars-global
   sourceRef:
     kind: GitRepository
     name: cluster-repository
