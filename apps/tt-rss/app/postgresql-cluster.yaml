@@ -20,7 +20,7 @@ spec:
   maxSyncReplicas: 1
 
   # 1. Continuous Backup to Synology (MinIO)
-  backup:
+  backup: &backup
     barmanObjectStore:
       destinationPath: s3://${S3_NAS_POSTGRES_BUCKET}/
       endpointURL: "${S3_NAS_URL}"
@@ -55,12 +55,12 @@ spec:
   # 4. Database Initialization
   bootstrap:
     recovery:
-      source:
-    initdb:
-      database: app_db
-      owner: app_user
-      # secret:
-      #   name: app-user-credentials
+      backup:
+    # initdb:
+    #   database: app_db
+    #   owner: app_user
+    #   # secret:
+    #   #   name: app-user-credentials
 
   # 5. Monitoring
   monitoring:
