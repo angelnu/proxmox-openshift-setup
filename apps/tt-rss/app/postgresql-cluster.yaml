@@ -64,15 +64,16 @@ spec:
 
   # 4. Database Initialization
   externalClusters:
-    - name: *ClusterName
+    - name: source
       plugin:
         name: barman-cloud.cloudnative-pg.io
         parameters:
           barmanObjectName: cluster-nas-backup
+          serverName: *ClusterName
 
   bootstrap:
     recovery:
-      source: *ClusterName
+      source: source
     # initdb:
     #   database: app_db
     #   owner: app_user
