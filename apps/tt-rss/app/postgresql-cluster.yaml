@@ -54,6 +54,8 @@ spec:
 
   # 4. Database Initialization
   bootstrap:
+    recovery:
+      source:
     initdb:
       database: app_db
       owner: app_user
