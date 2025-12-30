@@ -10,6 +10,9 @@ subjects:
   - kind: ServiceAccount
     name: ingress-nginx
     namespace: ${MY_NAMESPACE}
+  - kind: ServiceAccount
+    name: ingress-nginx-backend
+    namespace: ${MY_NAMESPACE}
 roleRef:
   kind: ClusterRole
   name: system:openshift:scc:privileged
