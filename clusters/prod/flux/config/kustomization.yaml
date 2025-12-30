@@ -6,6 +6,7 @@ resources:
   - ./flux.yaml
   - ./cluster-repository.yaml
   - ./vars.yaml
+  - ./vars-global.yaml
   - ./cluster.yaml
   - ./scc.yaml
 
