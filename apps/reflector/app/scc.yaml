@@ -6,7 +6,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: default
-    namespace: reflector
+    namespace: ${MY_NAMESPACE}
 roleRef:
   kind: ClusterRole
   name: system:openshift:scc:nonroot
@@ -18,8 +18,8 @@ metadata:
   name: reflector-scc-reflector
 subjects:
   - kind: ServiceAccount
-    name: ${MY_NAMESPACE}
-    namespace: reflector
+    name: reflector
+    namespace: ${MY_NAMESPACE}
 roleRef:
   kind: ClusterRole
   name: system:openshift:scc:nonroot
