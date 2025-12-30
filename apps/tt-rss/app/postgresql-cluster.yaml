@@ -43,10 +43,6 @@ spec:
 
   imageName: ghcr.io/cloudnative-pg/postgresql:16.1
 
-  # High Availability Settings
-  minSyncReplicas: 1 # Ensures at least one replica is always in sync (no data loss)
-  maxSyncReplicas: 1
-
   # 1. Continuous Backup to Synology (MinIO)
   plugins:
     - name: barman-cloud.cloudnative-pg.io
