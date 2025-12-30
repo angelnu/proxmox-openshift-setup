@@ -30,6 +30,8 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: &ClusterName test
+  annotations:
+    cnpg.io/skipEmptyWalArchiveCheck: enabled # Allow for backup source and target to be the same
 spec:
   instances: 3 # 1 Primary + 2 Replicas for High Availability
   imageName: ghcr.io/cloudnative-pg/postgresql:16.1
