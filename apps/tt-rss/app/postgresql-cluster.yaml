@@ -34,6 +34,13 @@ metadata:
     cnpg.io/skipEmptyWalArchiveCheck: enabled # Allow for backup source and target to be the same
 spec:
   instances: 3 # 1 Primary + 2 Replicas for High Availability
+
+  postgresql:
+    synchronous:
+      method: any
+      number: 1
+      failoverQuorum: true # To avoid failing over to an instance without the latest data
+
   imageName: ghcr.io/cloudnative-pg/postgresql:16.1
 
   # High Availability Settings
