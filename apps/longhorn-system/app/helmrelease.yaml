@@ -23,8 +23,6 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    global:
-      imageRegistry: docker.io
     openshift:
       enabled: true
       ui:
@@ -32,6 +30,34 @@ spec:
         port: 443
         proxy: 8443
     image:
+      longhorn:
+        engine:
+          registry: &defaultRegistry docker.io
+        manager:
+          registry: *defaultRegistry
+        ui:
+          registry: *defaultRegistry
+        instanceManager:
+          registry: *defaultRegistry
+        shareManager:
+          registry: *defaultRegistry
+        backingImageManager:
+          registry: *defaultRegistry
+        supportBundleKit:
+          registry: *defaultRegistry
+      csi:
+        attacher:
+          registry: *defaultRegistry
+        provisioner:
+          registry: *defaultRegistry
+        nodeDriverRegistrar:
+          registry: *defaultRegistry
+        resizer:
+          registry: *defaultRegistry
+        snapshotter:
+          registry: *defaultRegistry
+        livenessProbe:
+          registry: *defaultRegistry
       openshift:
         oauthProxy:
           registry: quay.io
