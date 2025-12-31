@@ -46,6 +46,10 @@ spec:
                 name: cluster-settings
               - kind: Secret
                 name: cluster-secrets
+              - kind: ConfigMap
+                name: global-settings
+              - kind: Secret
+                name: global-secrets
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
