@@ -20,6 +20,10 @@ spec:
       env:
         - name: AUTHENTIK_POSTGRESQL__SSLMODE
           value: prefer #require
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       volumes:
       - name: cluster-domain-cert
         secret:
