@@ -6,7 +6,7 @@ metadata:
   name: &app cert-manager-operator
   namespace: flux-system
 spec:
-  targetNamespace: &app cert-manager
+  targetNamespace: &ns cert-manager
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -21,4 +21,4 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      MY_NAMESPACE: *app
+      MY_NAMESPACE: *ns
