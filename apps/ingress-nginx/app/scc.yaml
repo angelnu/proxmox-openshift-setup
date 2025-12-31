@@ -5,6 +5,9 @@ metadata:
   name: ingress-nginx-scc
 subjects:
   - kind: ServiceAccount
+    name: default
+    namespace: ${MY_NAMESPACE}
+  - kind: ServiceAccount
     name: ingress-nginx-admission
     namespace: ${MY_NAMESPACE}
   - kind: ServiceAccount
