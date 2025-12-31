@@ -50,13 +50,10 @@ spec:
           serverName: *ClusterName
 
   bootstrap:
-    # recovery:
-    #   source: source
-    initdb:
-      database: app
-      # owner: app
-      # secret:
-      #   name: app-user-credentials
+    recovery:
+      source: source
+    # initdb:
+    #   database: app
 ---
 apiVersion: v1
 kind: Secret
