@@ -35,11 +35,8 @@ metadata:
 spec:
   instances: 3 # 1 Primary + 2 Replicas for High Availability
 
-  postgresql:
-    synchronous:
-      method: any
-      number: 1
-      failoverQuorum: true # To avoid failing over to an instance without the latest data
+  minSyncReplicas: 1
+  maxSyncReplicas: 2
 
   imageName: ghcr.io/cloudnative-pg/postgresql:16.1
 
@@ -62,9 +59,11 @@ spec:
 
   # 3. Storage Configuration
   storage:
+    storageClass: longhorn-postgres-replica-storage
     size: 2Gi
   walStorage:
     # Separate WAL storage is recommended for production to avoid IO contention
+    storageClass: longhorn-postgres-replica-storage
     size: 1Gi
 
   # 4. Database Initialization
