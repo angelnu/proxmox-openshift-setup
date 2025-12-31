@@ -53,8 +53,8 @@ spec:
     # recovery:
     #   source: source
     initdb:
-      database: postgres
-      owner: postgres
+      database: app
+      # owner: app
       # secret:
       #   name: app-user-credentials
 ---
