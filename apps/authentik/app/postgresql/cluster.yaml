@@ -51,7 +51,7 @@ spec:
 
   
   backup:
-    target: source
+    target: prefer-standby # instead of primary
   
   bootstrap:
     # recovery:
