@@ -120,7 +120,7 @@ spec:
   - kind: Secret
     name: authentik-app
     optional: false
-    valuesKey: name
+    valuesKey: dbname
     targetPath: authentik.postgresql.name
   - kind: Secret
     name: authentik-app
