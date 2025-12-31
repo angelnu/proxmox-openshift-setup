@@ -6,7 +6,7 @@ metadata:
   name: &app metallb-system-instance
   namespace: flux-system-operator
 spec:
-  targetNamespace: &&ns metallb-system
+  targetNamespace: &ns metallb-system
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
