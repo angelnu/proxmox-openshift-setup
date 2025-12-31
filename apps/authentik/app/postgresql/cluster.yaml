@@ -50,10 +50,10 @@ spec:
           serverName: *ClusterName
 
   bootstrap:
-    recovery:
-      source: source
-    # initdb:
-    #   database: app
+    # recovery:
+    #   source: source
+    initdb:
+      database: app
 ---
 apiVersion: v1
 kind: Secret
@@ -98,6 +98,7 @@ kind: ScheduledBackup
 metadata:
   name: "${MY_NAMESPACE}"
 spec:
+  immediate: true
   schedule: "0 0 0 * * *" # At midnight every day
   backupOwnerReference: self
   cluster:
