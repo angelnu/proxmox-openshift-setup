@@ -15,8 +15,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: cluster-repository
-  wait: true
-  force: true
+  wait: false # true - it never finish
   interval: 30m
   retryInterval: 1m
   timeout: 5m
