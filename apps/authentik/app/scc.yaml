@@ -7,6 +7,9 @@ subjects:
   - kind: ServiceAccount
     name: default
     namespace: ${MY_NAMESPACE}
+  - kind: ServiceAccount
+    name: ${MY_NAMESPACE}
+    namespace: ${MY_NAMESPACE}
 roleRef:
   kind: ClusterRole
   name: system:openshift:scc:nonroot
