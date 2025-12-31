@@ -53,7 +53,7 @@ spec:
     # recovery:
     #   source: source
     initdb:
-      database: "${DB_NAME}"
+      database: postgres
       owner: postgres
       # secret:
       #   name: app-user-credentials

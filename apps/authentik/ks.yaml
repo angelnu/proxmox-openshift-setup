@@ -22,4 +22,3 @@ spec:
   postBuild:
     substitute:
       MY_NAMESPACE: *app
-      DB_NAME: *app
