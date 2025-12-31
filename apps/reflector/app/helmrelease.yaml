@@ -9,11 +9,11 @@ spec:
   chart:
     spec:
       chart: reflector
-      version: v7.1.288
+      version: v9.2.0
       sourceRef:
         kind: HelmRepository
         name: emberstack
-        namespace: ${MY_NAMESPACE}
+        namespace: reflector
   install:
     remediation:
       retries: 3
@@ -22,3 +22,5 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  values:
+

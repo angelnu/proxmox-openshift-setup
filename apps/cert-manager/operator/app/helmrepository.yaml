@@ -4,7 +4,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: jetstack
-  namespace: ${MY_NAMESPACE}
+  namespace: cert-manager
 spec:
   interval: 2h
   url: https://charts.jetstack.io/

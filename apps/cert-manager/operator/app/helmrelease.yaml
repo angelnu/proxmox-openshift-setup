@@ -14,7 +14,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: jetstack
-        namespace: ${MY_NAMESPACE}
+        namespace: cert-manager
       interval: 5m
   install:
     remediation:

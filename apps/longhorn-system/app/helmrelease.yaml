@@ -13,7 +13,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: longhorn
-        namespace: ${MY_NAMESPACE}
+        namespace: longhorn-system
   install:
     remediation:
       retries: 3

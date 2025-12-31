@@ -24,7 +24,7 @@ spec:
       volumes:
       - name: cluster-domain-cert
         secret:
-          secretName: ${CLUSTER_DOMAIN_CERT}
+          secretName: ${CLUSTER_DOMAIN_CERThel}
           optional: false # default setting; "mysecret" must exist
           items:
           - key: tls.crt
