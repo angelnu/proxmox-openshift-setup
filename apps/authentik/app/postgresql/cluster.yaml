@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: &ClusterName "${MY_NAMESPACE}"
+  name: &ClusterName "${MY_NAMESPACE}-db"
   annotations:
     cnpg.io/skipEmptyWalArchiveCheck: enabled # Allow for backup source and target to be the same
 spec:
