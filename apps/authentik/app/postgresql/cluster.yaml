@@ -102,4 +102,4 @@ spec:
   schedule: "0 0 0 * * *" # At midnight every day
   backupOwnerReference: self
   cluster:
-    name: "${MY_NAMESPACE}"
+    name: "${MY_NAMESPACE}-db"
