@@ -4,7 +4,7 @@ metadata:
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
   finalizers:
-  - ingresscontroller.operator.openshift.io/finalizer-ingresscontroller
+    - ingresscontroller.operator.openshift.io/finalizer-ingresscontroller
   generation: 15
   name: default
 spec:
@@ -20,7 +20,7 @@ spec:
   httpEmptyRequestsPolicy: Respond
   httpErrorCodePages:
     name: ""
-  replicas: 1
+  replicas: 2
   tuningOptions:
     reloadInterval: 0s
   unsupportedConfigOverrides: null
