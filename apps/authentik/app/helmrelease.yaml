@@ -16,15 +16,14 @@ spec:
         namespace: authentik
       interval: 5m
   values:
-
     global:    
       env:
         - name: AUTHENTIK_POSTGRESQL__SSLMODE
-          value: require
+          value: prefer #require
       volumes:
       - name: cluster-domain-cert
         secret:
-          secretName: ${CLUSTER_DOMAIN_CERThel}
+          secretName: ${CLUSTER_DOMAIN_CERT}
           optional: false # default setting; "mysecret" must exist
           items:
           - key: tls.crt
