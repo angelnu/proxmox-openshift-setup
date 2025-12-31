@@ -12,6 +12,8 @@ spec:
       app.kubernetes.io/name: *app
   path: ./apps/ingress-nginx/app
   prune: true
+  dependsOn:
+    - name: metallb-system-instance
   sourceRef:
     kind: GitRepository
     name: cluster-repository
