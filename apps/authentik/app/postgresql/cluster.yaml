@@ -54,10 +54,10 @@ spec:
     target: prefer-standby # instead of primary
   
   bootstrap:
-    # recovery:
-    #   source: source
-    initdb:
-      database: app
+    recovery:
+      source: source
+    # initdb:
+    #   database: app
 ---
 apiVersion: v1
 kind: Secret
