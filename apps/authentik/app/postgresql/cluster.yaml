@@ -49,6 +49,10 @@ spec:
           barmanObjectName: cluster-nas-backup
           serverName: *ClusterName
 
+  
+  backup:
+    target: source
+  
   bootstrap:
     # recovery:
     #   source: source
