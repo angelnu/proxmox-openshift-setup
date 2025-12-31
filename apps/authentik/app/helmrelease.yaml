@@ -125,7 +125,7 @@ spec:
   - kind: Secret
     name: authentik-app
     optional: false
-    valuesKey: user
+    valuesKey: username
     targetPath: authentik.postgresql.user
   - kind: Secret
     name: authentik-app
