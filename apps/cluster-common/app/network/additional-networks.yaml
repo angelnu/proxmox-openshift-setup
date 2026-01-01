@@ -11,5 +11,5 @@ spec:
     localnet:
       role: Secondary
       subnets:
-      - "192.168.0.0/19"
+      - "192.168.6.64/26"
       physicalNetworkName: br-ex
