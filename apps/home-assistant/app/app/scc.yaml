@@ -4,7 +4,7 @@ kind: RoleBinding
 metadata:
   name: app-scc
 subjects:
-  - kind: serviceAccountName
+  - kind: serviceAccount
     name: default
     namespace: ${MY_NAMESPACE}
 roleRef:
