@@ -47,12 +47,12 @@ spec:
             securityContext:
               runAsUser: 0
         pod:
-          hostAliases:
-            # We cannot access the ingress LB address directly - go through external IP
-            - ip: "${FIX_EXTERNAL_IP}"
-              hostnames:
-                - "nextcloud.${CLUSTER_DOMAIN}"
-                - "jellyfin.pub.${CLUSTER_DOMAIN}"
+          # hostAliases:
+          #   # We cannot access the ingress LB address directly - go through external IP
+          #   - ip: "${FIX_EXTERNAL_IP}"
+          #     hostnames:
+          #       - "nextcloud.${CLUSTER_DOMAIN}"
+          #       - "jellyfin.pub.${CLUSTER_DOMAIN}"
 
           annotations:
             k8s.v1.cni.cncf.io/networks: |
