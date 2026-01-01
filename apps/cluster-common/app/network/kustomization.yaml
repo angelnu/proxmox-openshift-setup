@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# We do not list 'cluster' in resources because it already exists in the cluster
+patches:
+  - path: additional-networks.yaml
+    target:
+      group: operator.openshift.io
+      version: v1
+      kind: Network
+      name: cluster

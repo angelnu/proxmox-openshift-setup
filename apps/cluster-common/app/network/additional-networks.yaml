@@ -1,0 +1,27 @@
+apiVersion: operator.openshift.io/v1
+kind: Network
+metadata:
+  name: cluster
+spec:
+  additionalNetworks:
+    - name: macvlan-static
+      namespace: default
+      type: Raw
+      rawCNIConfig: |
+        {
+          "cniVersion": "0.3.1",
+          "name": "macvlan-static",
+          "type": "macvlan",
+          "master": "eth0",
+          "capabilities": { "ips": true },
+          "ipam": {
+            "type": "host-local",
+            "subnet": "192.168.0.0/19",
+            "rangeStart": "${CLUSTER_EXTERNAL_SUBNET_PREFIX}.64",
+            "rangeEnd": "${CLUSTER_EXTERNAL_SUBNET_PREFIX}.127",
+            "routes": [
+              { "dst": "192.168.0.0/16" }
+            ],
+            "gateway": "192.168.2.1"
+          }
+        }
