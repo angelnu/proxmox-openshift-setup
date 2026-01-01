@@ -20,7 +20,7 @@ spec:
             - email
           preferredUsername:
             - preferred_username
-        clientID: okd-${CLUSTER_NAME}
+        clientID: okd
         clientSecret:
           name: authentik-secret
         extraScopes:
