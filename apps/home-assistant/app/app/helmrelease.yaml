@@ -57,7 +57,7 @@ spec:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
               [{
-                "name":"macvlan-static",
+                "name":"default/macvlan-static",
                 "ips": ["${CLUSTER_EXTERNAL_SUBNET_PREFIX}.${CLUSTER_MACVLAN_HA}"]
               }]
 
