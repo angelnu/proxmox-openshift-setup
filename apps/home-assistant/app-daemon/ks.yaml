@@ -13,8 +13,7 @@ spec:
   path: ./apps/home-assistant/app-daemon/app
   prune: true
   dependsOn:
-    - name: ingress-nginx
-    - name: home-assistant-db
+    - name: home-assistant-app
   sourceRef:
     kind: GitRepository
     name: cluster-repository
