@@ -1,27 +1,15 @@
-apiVersion: operator.openshift.io/v1
-kind: Network
+apiVersion: k8s.ovn.org/v1
+kind: ClusterUserDefinedNetwork
 metadata:
-  name: cluster
+  name: cluster-udn-civil-leopard
 spec:
-  additionalNetworks:
-    - name: macvlan-static
-      namespace: default
-      type: Raw
-      rawCNIConfig: |
-        {
-          "cniVersion": "0.3.1",
-          "name": "macvlan-static",
-          "type": "macvlan",
-          "master": "ens18",
-          "capabilities": { "ips": true },
-          "ipam": {
-            "type": "host-local",
-            "subnet": "192.168.0.0/19",
-            "rangeStart": "${CLUSTER_EXTERNAL_SUBNET_PREFIX}.64",
-            "rangeEnd": "${CLUSTER_EXTERNAL_SUBNET_PREFIX}.127",
-            "routes": [
-              { "dst": "192.168.0.0/16" }
-            ],
-            "gateway": "192.168.2.1"
-          }
-        }
+  namespaceSelector:
+    matchLabels:
+      secondary.network: localnet1
+  network:
+    topology: Layer2
+    localnet:
+      role: Secondary
+      subnets:
+      - "192.168.0.0/19"
+      physicalNetworkName: localnet1
