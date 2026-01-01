@@ -5,11 +5,11 @@ metadata:
 spec:
   namespaceSelector:
     matchLabels:
-      secondary.network: localnet1
+      secondary.network: localnet
   network:
     topology: Layer2
     localnet:
       role: Secondary
       subnets:
       - "192.168.0.0/19"
-      physicalNetworkName: localnet1
+      physicalNetworkName: br-ex
