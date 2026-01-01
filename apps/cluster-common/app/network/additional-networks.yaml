@@ -12,4 +12,4 @@ spec:
       role: Secondary
       subnets:
       - "192.168.6.64/26"
-      physicalNetworkName: br-ex
+      physicalNetworkName: localnet1
