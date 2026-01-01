@@ -1,7 +1,7 @@
 apiVersion: k8s.ovn.org/v1
 kind: ClusterUserDefinedNetwork
 metadata:
-  name: cluster-udn-civil-leopard
+  name: localnet
 spec:
   namespaceSelector:
     matchLabels:
