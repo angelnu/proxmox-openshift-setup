@@ -13,6 +13,8 @@ spec:
   path: ./apps/ingress-nginx/app
   prune: true
   dependsOn:
+    - name: cert-manager-certificate
+    - name: reflector
     - name: metallb-system-instance
   sourceRef:
     kind: GitRepository

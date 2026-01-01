@@ -12,6 +12,9 @@ spec:
       app.kubernetes.io/name: *app
   path: ./apps/maddy/app
   prune: true
+  dependsOn:
+    - name: cert-manager-certificate
+    - name: reflector
   sourceRef:
     kind: GitRepository
     name: cluster-repository
