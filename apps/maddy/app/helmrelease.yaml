@@ -361,7 +361,7 @@ spec:
     name: maddy-db-app
     optional: false
     valuesKey: dbname
-    targetPath: maddy.sql.postgres_dsn.name
+    targetPath: maddy.sql.postgres_dsn.dbname
   - kind: Secret
     name: maddy-db-app
     optional: false
