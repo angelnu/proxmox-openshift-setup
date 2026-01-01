@@ -58,7 +58,6 @@ spec:
             k8s.v1.cni.cncf.io/networks: |
               [{
                 "name":"macvlan-static",
-                "namespace": "kube-system",
                 "ips": ["${CLUSTER_EXTERNAL_SUBNET_PREFIX}.${CLUSTER_MACVLAN_HA}"]
               }]
 
