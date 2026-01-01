@@ -25,8 +25,7 @@ data:
               PAPERLESS_LOGOUT_REDIRECT_URL: https://authentik.pub.${CLUSTER_DOMAIN}/outpost.goauthentik.io/sign_out
           broker:
             image:
-              # renovate: datasource=helm-values depName=docker lookupName=ghcr.io/paperless-ngx/paperless-ngx
-              repository: redis
+              repository: docker.io/library/redis
               tag: 7.4@sha256:bb142a9c18ac18a16713c1491d779697b4e107c22a97266616099d288237ef47
 
     persistence:
