@@ -1,0 +1,26 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  name: cluster
+  namespace: flux-system
+spec:
+  providerRef:
+    name: flux-system
+  eventSeverity: info
+  eventSources:
+    # Adds status to git commit
+    - kind: Kustomization
+      name: settings
+      namespace: flux-system
+    - kind: Kustomization
+      name: flux-system
+      namespace: flux-system
+    - kind: Kustomization
+      name: operators
+      namespace: flux-system
+    - kind: Kustomization
+      name: infrastructure
+      namespace: flux-system
+    - kind: Kustomization
+      name: apps
+      namespace: flux-system

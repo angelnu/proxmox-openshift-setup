@@ -11,11 +11,11 @@ data:
   CLUSTER_MAIL_SERVER_PORT: "25"
   # mcvlan_static_range: &anchor_ip_mcvlan_static_range
   # 192.168.1.0-192.168.1.63
-  CLUSTER_MACVLAN_HA: "1"
-  #CLUSTER_MACVLAN_PLEX: "2"
-  #CLUSTER_MACVLAN_CCU: "3"
-  CLUSTER_MACVLAN_UNIFI: "4"
-  CLUSTER_MACVLAN_MA: "5"
+  CLUSTER_MACVLAN_HA: "64"
+  #CLUSTER_MACVLAN_PLEX: "65"
+  #CLUSTER_MACVLAN_CCU: "66"
+  CLUSTER_MACVLAN_UNIFI: "67"
+  CLUSTER_MACVLAN_MA: "68"
 
   # lb_static_range: &anchor_ip_lb_static_range
   # 192.168.1.128-192.168.1.192
