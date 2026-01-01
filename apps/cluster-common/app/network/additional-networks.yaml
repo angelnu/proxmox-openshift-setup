@@ -7,7 +7,7 @@ spec:
     matchLabels:
       secondary.network: localnet
   network:
-    topology: Layer2
+    topology: Localnet
     localnet:
       role: Secondary
       subnets:
