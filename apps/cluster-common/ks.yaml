@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./apps/cluster-common/app
-  prune: true
+  prune: false
   dependsOn:
     - name: reflector
   sourceRef:
