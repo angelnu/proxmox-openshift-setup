@@ -61,6 +61,8 @@ spec:
         tls:
           - hosts:
               - rss.${CLUSTER_SHORT_DOMAIN}
+    postgresql:
+      enabled: false # use own chart
 
   valuesFrom:
     - kind: Secret
