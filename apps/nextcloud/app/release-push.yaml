@@ -21,6 +21,8 @@ spec:
   values:
     controllers:
       main:
+        serviceAccount:
+          identifier: default
         containers:
           main:
             image:

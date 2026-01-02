@@ -26,7 +26,8 @@ spec:
               repository: docker.io/library/nginx
               tag: 1.29.4@sha256:fb01117203ff38c2f9af91db1a7409459182a37c87cced5cb442d1d8fcc66d19
       cronjob:
-        enabled: true
+        serviceAccount:
+          identifier: default
         type: cronjob
         cronjob:
           backoffLimit: 6
@@ -49,7 +50,8 @@ spec:
               - secretRef:
                   name: comic-secrets
       test:
-        enabled: true
+        serviceAccount:
+          identifier: default
         containers:
           main:
             image:
