@@ -10,6 +10,6 @@ spec:
     topology: Localnet
     localnet:
       role: Secondary
-      subnets:
-      - "192.168.6.64/26"
+      # subnets:
+      # - "192.168.6.64/26"
       physicalNetworkName: localnet1
