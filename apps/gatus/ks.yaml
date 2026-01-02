@@ -13,8 +13,7 @@ spec:
   path: ./apps/gatus/app
   prune: true
   dependsOn:
-    - name: cert-manager-certificate
-    - name: reflector
+    - name: ingress-nginx
     - name: ceph
   sourceRef:
     kind: GitRepository
