@@ -48,6 +48,9 @@ spec:
           nfs:
             server: "${NFS_SERVER}"
             path: "${NFS_KUBERNETES}/nextcloud"
+    serviceAccount:
+      default:
+        enabled: true
     rbac:
       bindings:
         default:
