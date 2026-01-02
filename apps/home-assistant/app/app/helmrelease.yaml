@@ -61,7 +61,7 @@ spec:
                   "name": "localnet",
                   "interface": "localnet",
                   "ips": [
-                    "${CLUSTER_EXTERNAL_SUBNET_PREFIX}.${CLUSTER_MACVLAN_HA}/${CLUSTER_LOCALNET_PREFIX_LENGTH}"
+                    "${CLUSTER_EXTERNAL_SUBNET_PREFIX}.${CLUSTER_LOCALNET_HA}/${CLUSTER_LOCALNET_PREFIX_LENGTH}"
                     ]
                 }
               ]
