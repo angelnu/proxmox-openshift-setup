@@ -13,8 +13,6 @@ spec:
         kind: HelmRepository
         name: angelnu-helm-charts
         namespace: flux-system
-  dependsOn:
-    - name: tt-rss-db
   #See https://github.com/angelnu/helm-charts/blob/main/charts/apps/tt-rss/values.yaml
   values:
     controllers:
