@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: recoveryPod
+spec:
+  containers:
+  - image: postgres:latest
+    imagePullPolicy: Always
+    name: main
+    # Just spin & wait forever
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+    env:
+    - name: PGHOST
+      valueFrom:
+        secretKeyRef:
+          key: host
+          name: ${MY_NAMESPACE}-db-app
+    - name: PGPORT
+      valueFrom:
+        secretKeyRef:
+          key: port
+          name: ${MY_NAMESPACE}-db-app
+    - name: PGDATABASE
+      valueFrom:
+        secretKeyRef:
+          key: dbname
+          name: ${MY_NAMESPACE}-db-app
+    - name: PGPASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: password
+          name: ${MY_NAMESPACE}-db-app
+    - name: PGUSER
+      valueFrom:
+        secretKeyRef:
+          key: username
+          name: ${MY_NAMESPACE}-db-app
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+    volumeMounts:
+    - mountPath: /backup
+      name: backup
+  serviceAccount: default
+  volumes:
+  - name: backup
+    nfs:
+      path: /volume1/kubernetes/backup/db/authentik
+      server: nas.home.angelnu.com

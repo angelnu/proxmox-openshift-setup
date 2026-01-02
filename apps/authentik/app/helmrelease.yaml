@@ -114,27 +114,27 @@ spec:
     optional: false
   # Postgres generated secret
   - kind: Secret
-    name: authentik-db-app
+    name: ${MY_NAMESPACE}-db-app
     optional: false
     valuesKey: host
     targetPath: authentik.postgresql.host
   - kind: Secret
-    name: authentik-db-app
+    name: ${MY_NAMESPACE}-db-app
     optional: false
     valuesKey: dbname
     targetPath: authentik.postgresql.name
   - kind: Secret
-    name: authentik-db-app
+    name: ${MY_NAMESPACE}-db-app
     optional: false
     valuesKey: username
     targetPath: authentik.postgresql.user
   - kind: Secret
-    name: authentik-db-app
+    name: ${MY_NAMESPACE}-db-app
     optional: false
     valuesKey: password
     targetPath: authentik.postgresql.password
   - kind: Secret
-    name: authentik-db-app
+    name: ${MY_NAMESPACE}-db-app
     optional: false
     valuesKey: port
     targetPath: authentik.postgresql.port
