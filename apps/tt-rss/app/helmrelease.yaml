@@ -25,7 +25,7 @@ spec:
               repository: ghcr.io/angelnu/tt-rss
               tag: 2.0.9909
               pullPolicy: Always
-              
+
             securityContext:
               runAsUser: 0
 
@@ -97,7 +97,7 @@ spec:
       name: tt-rss-db-app
       optional: false
       valuesKey: dbname
-      targetPath: mcontrollers.main.containers.main.env.TTRSS_DB_NAME
+      targetPath: controllers.main.containers.main.env.TTRSS_DB_NAME
     - kind: Secret
       name: tt-rss-db-app
       optional: false
