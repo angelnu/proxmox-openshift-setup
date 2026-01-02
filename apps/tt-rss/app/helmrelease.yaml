@@ -17,12 +17,17 @@ spec:
   values:
     controllers:
       main:
+        serviceAccount:
+          identifier: default
         containers:
           main:
             image:
               repository: ghcr.io/angelnu/tt-rss
               tag: 2.0.9909
               pullPolicy: Always
+              
+            securityContext:
+              runAsUser: 0
 
             env:
               TTRSS_SELF_URL_PATH: https://rss.${CLUSTER_DOMAIN}/
@@ -42,6 +47,19 @@ spec:
               #TTRSS_LDAP_AUTH_BASEDN: set in secret
               #TTRSS_LDAP_AUTH_SEARCHFILTER: set in secret
               TTRSS_LDAP_AUTH_LOGIN_ATTRIB: cn
+    
+    serviceAccount:
+      default:
+        enabled: true
+    rbac:
+      bindings:
+        default:
+          type: RoleBinding
+          roleRef:
+            name: system:openshift:scc:anyuid  # For NFS mount
+            kind: ClusterRole
+          subjects:
+            - identifier: default
 
     ingress:
       main:
