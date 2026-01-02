@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: recoveryPod
+  name: recovery-pod
 spec:
   containers:
   - image: postgres:latest
