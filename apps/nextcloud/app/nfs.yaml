@@ -26,35 +26,3 @@ spec:
   resources:
     requests:
       storage: 1T
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nfs-pod
-spec:
-  containers:
-    - name: web-server
-      image: nginx
-      volumeMounts:
-        - name: nfs-storage
-          mountPath: /usr/share/nginx/html # Where the NFS data appears in the pod
-  volumes:
-    - name: nfs-storage
-      persistentVolumeClaim:
-        claimName: nfs-nextcloud # Must match the metadata.name of the PVC above
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nfs-pod2
-spec:
-  containers:
-    - name: web-server
-      image: nginx
-      volumeMounts:
-        - name: nfs-storage
-          mountPath: /usr/share/nginx/html # Where the NFS data appears in the pod
-  volumes:
-    - name: nfs-storage
-      persistentVolumeClaim:
-        claimName: nfs-nextcloud # Must match the metadata.name of the PVC above
