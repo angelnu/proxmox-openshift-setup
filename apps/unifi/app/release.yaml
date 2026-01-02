@@ -32,7 +32,7 @@ spec:
               JVM_INIT_HEAP_SIZE:
               JVM_MAX_HEAP_SIZE: 1024M
             securityContext:
-              runAsUser: 999  # User unifi
+              runAsUser: 0
         pod:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
