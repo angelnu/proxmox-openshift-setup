@@ -1,3 +1,21 @@
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: recovery
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: recovery-scc
+subjects:
+  - kind: ServiceAccount
+    name: recovery
+    namespace: ${MY_NAMESPACE}
+roleRef:
+  kind: ClusterRole
+  name: system:openshift:scc:anyuid # TBD what is min to mount NFS?
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: v1
 kind: Pod
 metadata:
@@ -43,7 +61,7 @@ spec:
     volumeMounts:
     - mountPath: /backup
       name: backup
-  serviceAccount: default
+  serviceAccount: recovery
   volumes:
   - name: backup
     nfs:
