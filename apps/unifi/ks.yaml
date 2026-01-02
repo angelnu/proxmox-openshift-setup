@@ -12,6 +12,8 @@ spec:
       app.kubernetes.io/name: *app
   path: ./apps/unifi/app
   prune: true
+  dependsOn:
+    - name: ingress-nginx
   sourceRef:
     kind: GitRepository
     name: cluster-repository
