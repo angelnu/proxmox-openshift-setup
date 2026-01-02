@@ -69,37 +69,37 @@ spec:
       optional: false
     # Postgres generated secret
     - kind: Secret
-      name: maddy-db-app
+      name: tt-rss-db-app
       optional: false
       valuesKey: host
       targetPath: controllers.main.containers.main.env.TTRSS_DB_HOST
     - kind: Secret
-      name: maddy-db-app
+      name: tt-rss-db-app
       optional: false
       valuesKey: dbname
       targetPath: mcontrollers.main.containers.main.env.TTRSS_DB_NAME
     - kind: Secret
-      name: maddy-db-app
+      name: tt-rss-db-app
       optional: false
       valuesKey: user
       targetPath: controllers.main.containers.main.env.TTRSS_DB_USER
     - kind: Secret
-      name: maddy-db-app
+      name: tt-rss-db-app
       optional: false
       valuesKey: password
       targetPath: controllers.main.containers.main.env.TTRSS_DB_PASS
     - kind: Secret
-      name: maddy-db-app
+      name: tt-rss-db-app
       optional: false
       valuesKey: password
       targetPath: controllers.main.containers.main.env.DB_PASS
     - kind: Secret
-      name: maddy-db-app
+      name: tt-rss-db-app
       optional: false
       valuesKey: password
       targetPath: controllers.main.containers.main.env.DB_ENV_PASS
     - kind: Secret
-      name: maddy-db-app
+      name: tt-rss-db-app
       optional: false
       valuesKey: port
       targetPath: controllers.main.containers.main.env.TTRSS_DB_PORT
