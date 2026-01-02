@@ -26,16 +26,13 @@ spec:
               tag: v10.0.162
             env:
               RUNAS_UID0: "false"
-              UNIFI_UID: "999"
-              UNIFI_GID: "999"
+              BIND_PRIV: "true"
               UNIFI_STDOUT: "true"
               JVM_INIT_HEAP_SIZE:
               JVM_MAX_HEAP_SIZE: 1024M
             securityContext:
-              runAsUser: 0
-              capabilities:
-                add:
-                - NET_BIND_SERVICE
+              runAsUser: 999
+              runAsGroup: 999
         pod:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
