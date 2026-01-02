@@ -9,5 +9,5 @@ subjects:
     namespace: ${MY_NAMESPACE}
 roleRef:
   kind: ClusterRole
-  name: system:openshift:scc:privileged # TBD: why not hostmount-anyuid-v2
+  name: system:openshift:scc:anyuid-v2
   apiGroup: rbac.authorization.k8s.io

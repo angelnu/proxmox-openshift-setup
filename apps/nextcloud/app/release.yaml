@@ -128,17 +128,17 @@ spec:
         nfs:
           server: "${NFS_SERVER}"
           path: "${NFS_DOWNLOADS}"
-      - name: esphome
-        persistentVolumeClaim:
-          claimName: esphome-pvc
+      # - name: esphome
+      #   persistentVolumeClaim:
+      #     claimName: esphome-pvc
       extraVolumeMounts:
       - name: nfs-video
         mountPath: "/video"
       - name: nfs-software
         mountPath: "/software"
-      - name: esphome
-        subPath: devices
-        mountPath: "/software/3D-printer/projects/Electronica/esphome_devices"
+      # - name: esphome
+      #   subPath: devices
+      #   mountPath: "/software/3D-printer/projects/Electronica/esphome_devices"
       - name: nfs-music
         mountPath: "/music"
       - name: nfs-downloads
