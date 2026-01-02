@@ -53,6 +53,7 @@ spec:
   backup:
     target: prefer-standby # instead of primary
   
+  enableSuperuserAccess: true
   bootstrap:
     # recovery:
     #   source: source

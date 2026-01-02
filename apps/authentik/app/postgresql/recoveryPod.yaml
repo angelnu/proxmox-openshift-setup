@@ -33,27 +33,27 @@ spec:
       valueFrom:
         secretKeyRef:
           key: host
-          name: ${MY_NAMESPACE}-db-app
+          name: &secret ${MY_NAMESPACE}-db-superuser
     - name: PGPORT
       valueFrom:
         secretKeyRef:
           key: port
-          name: ${MY_NAMESPACE}-db-app
+          name: *secret
     - name: PGDATABASE
       valueFrom:
         secretKeyRef:
           key: dbname
-          name: ${MY_NAMESPACE}-db-app
+          name: *secret
     - name: PGPASSWORD
       valueFrom:
         secretKeyRef:
           key: password
-          name: ${MY_NAMESPACE}-db-app
+          name: *secret
     - name: PGUSER
       valueFrom:
         secretKeyRef:
           key: username
-          name: ${MY_NAMESPACE}-db-app
+          name: *secret
     resources:
       requests:
         cpu: 5m
