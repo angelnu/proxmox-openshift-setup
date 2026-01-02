@@ -21,3 +21,4 @@
        ```
 3. `kubectl -n flux-system apply -k clusters/<cluster>/bootstrap`
 4. `kubectl -n flux-system apply -k clusters/<cluster>/flux/config`
+5. Install [nmstate](https://github.com/nmstate/kubernetes-nmstate/releases)
