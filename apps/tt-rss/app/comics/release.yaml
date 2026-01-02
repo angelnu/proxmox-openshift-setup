@@ -19,6 +19,8 @@ spec:
   values:
     controllers:
       nginx:
+        serviceAccount:
+          identifier: default
         enabled: true
         containers:
           main:
