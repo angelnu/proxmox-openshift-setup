@@ -12,6 +12,8 @@ spec:
       app.kubernetes.io/name: *app
   path: ./apps/tt-rss/app
   prune: true
+  dependsOn:
+    - name: openshift-operators
   sourceRef:
     kind: GitRepository
     name: cluster-repository
