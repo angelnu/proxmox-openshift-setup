@@ -208,6 +208,12 @@ spec:
     persistence:
       enabled: true
       existingClaim: nfs-nextcloud
+    
+    rbac:
+      enabled: false
+      serviceaccount:
+        create: true
+        name: nextcloud
 
   valuesFrom:
   - kind: Secret
