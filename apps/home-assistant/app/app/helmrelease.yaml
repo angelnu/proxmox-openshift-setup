@@ -56,11 +56,15 @@ spec:
 
           annotations:
             k8s.v1.cni.cncf.io/networks: |
-              [{
-                "name":"localnet",
-                "ips": ["${CLUSTER_EXTERNAL_SUBNET_PREFIX}.${CLUSTER_MACVLAN_HA}"]
-              }]
-
+              [
+                {
+                  "name": "localnet",
+                  "interface": "localnet",
+                  "ips": [
+                    "${CLUSTER_EXTERNAL_SUBNET_PREFIX}.${CLUSTER_MACVLAN_HA}/${CLUSTER_LOCALNET_PREFIX_LENGTH}"
+                    ]
+                }
+              ]
     persistence:
       config:
         enabled: true
