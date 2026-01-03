@@ -57,7 +57,7 @@ spec:
     # recovery:
     #   source: source
     initdb:
-      database: app
+      database: postgres
 ---
 apiVersion: v1
 kind: Secret

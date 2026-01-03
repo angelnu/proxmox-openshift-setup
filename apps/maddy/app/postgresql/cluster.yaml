@@ -54,10 +54,10 @@ spec:
   # 4. Database Initialization
   enableSuperuserAccess: false
   bootstrap:
-    # recovery:
-    #   source: source
-    initdb:
-      database: postgres
+    recovery:
+      source: source
+    # initdb:
+    #   database: postgres
 ---
 apiVersion: v1
 kind: Secret
