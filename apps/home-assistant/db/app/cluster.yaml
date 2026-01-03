@@ -58,12 +58,12 @@ spec:
       source: source
       database: app
       secret:
-        name: "${MY_NAMESPACE}-db-app"
+        name: "${MY_NAMESPACE}-db-app-fix"
     # initdb:
     #   database: app
     #   owner: app
     #   secret:
-    #     name: "${MY_NAMESPACE}-db-app"
+    #     name: "${MY_NAMESPACE}-db-app-fix"
 ---
 apiVersion: v1
 kind: Secret
