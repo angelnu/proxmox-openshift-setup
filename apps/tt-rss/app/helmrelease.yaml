@@ -30,7 +30,7 @@ spec:
               runAsUser: 0
 
             env:
-              TTRSS_SELF_URL_PATH: https://rss.${CLUSTER_DOMAIN}/
+              TTRSS_SELF_URL_PATH: https://rss.${CLUSTER_SHORT_DOMAIN}/
               # TTRSS_DB_HOST:
               # TTRSS_DB_PORT:
               # TTRSS_DB_USER:
