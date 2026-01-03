@@ -80,7 +80,7 @@ spec:
         nginx.ingress.kubernetes.io/enable-global-auth: "false"
       tls:
       - hosts:
-        - nextcloud.${CLUSTER_DOMAIN}
+        - nextcloud.${CLUSTER_SHORT_DOMAIN}
     #username: admin
     #password: password
     redis:
