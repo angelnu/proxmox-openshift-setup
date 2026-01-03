@@ -216,7 +216,7 @@ spec:
         name: nextcloud
 
   valuesFrom:
-  - kind: Secret
-    name: "nextcloud-helm-values"
-    valuesKey: nextcloud.yaml
-    optional: false
+    - kind: Secret
+      name: "nextcloud-helm-values"
+      valuesKey: nextcloud.yaml
+      optional: false

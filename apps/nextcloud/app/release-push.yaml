@@ -80,7 +80,7 @@ spec:
           #nginx.ingress.kubernetes.io/whitelist-source-range: "${INGRESS_WHITELIST_SOURCE_RANGE}"
 
         hosts:
-          - host: nextcloud.${CLUSTER_DOMAIN}
+          - host: nextcloud.${CLUSTER_SHORT_DOMAIN}
             paths: &paths
               - path: /push/
                 pathType: Prefix
