@@ -52,7 +52,7 @@ spec:
     target: prefer-standby # instead of primary
   
   # 4. Database Initialization
-  enableSuperuserAccess: true
+  enableSuperuserAccess: false
   bootstrap:
     # recovery:
     #   source: source

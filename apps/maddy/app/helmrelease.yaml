@@ -3,7 +3,6 @@ kind: HelmRelease
 metadata:
   name: "${MY_NAMESPACE}"
 spec:
-  suspend: true
   interval: 30m
   chart:
     spec:
