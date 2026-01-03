@@ -13,6 +13,7 @@ spec:
   dnsNames:
   - '${CLUSTER_SHORT_DOMAIN}'
   - '*.${CLUSTER_SHORT_DOMAIN}'
+  - '*.${CLUSTER_DOMAIN}'
   - '*.home.${CLUSTER_DOMAIN}'
   - '*.pub.${CLUSTER_DOMAIN}'
   - '*.apps.${CLUSTER_DOMAIN}'
