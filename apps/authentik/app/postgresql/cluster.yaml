@@ -38,7 +38,7 @@ spec:
   walStorage:
     # Separate WAL storage is recommended for production to avoid IO contention
     storageClass: longhorn-postgres-replica-storage
-    size: 5Gi
+    size: 10Gi
 
   # 4. Database Initialization
   externalClusters:
@@ -53,12 +53,12 @@ spec:
   backup:
     target: prefer-standby # instead of primary
   
-  enableSuperuserAccess: true
+  enableSuperuserAccess: false
   bootstrap:
-    # recovery:
-    #   source: source
-    initdb:
-      database: app
+    recovery:
+      source: source
+    # initdb:
+    #   database: app
 ---
 apiVersion: v1
 kind: Secret
