@@ -40,7 +40,6 @@ spec:
     storageClass: longhorn-postgres-replica-storage
     size: 3Gi
 
-  # 4. Database Initialization
   externalClusters:
     - name: source
       plugin:
@@ -49,10 +48,11 @@ spec:
           barmanObjectName: cluster-nas-backup
           serverName: *ClusterName
 
-  
   backup:
     target: prefer-standby # instead of primary
   
+  # 4. Database Initialization
+  enableSuperuserAccess: true
   bootstrap:
     # recovery:
     #   source: source
