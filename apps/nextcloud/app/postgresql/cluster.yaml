@@ -55,9 +55,9 @@ spec:
   bootstrap:
     # recovery:
     #   source: source
-    #   database: tt-rss
+    #   database: app
     initdb:
-      database: postgres
+      database: app
 ---
 apiVersion: v1
 kind: Secret
