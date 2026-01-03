@@ -93,7 +93,7 @@ spec:
             endpoints:
               - name: Proxmox 1
                 group: core
-                url: "https://pve1.${CLUSTER_DOMAIN}:8006"
+                url: "https://pve1.${CLUSTER_SHORT_DOMAIN}:8006"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -102,7 +102,7 @@ spec:
                   - "[STATUS] == 200"
               - name: Proxmox 2
                 group: core
-                url: "https://pve2.${CLUSTER_DOMAIN}:8006"
+                url: "https://pve2.${CLUSTER_SHORT_DOMAIN}:8006"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -111,7 +111,7 @@ spec:
                   - "[STATUS] == 200"
               - name: Proxmox 3
                 group: core
-                url: "https://pve3.${CLUSTER_DOMAIN}:8006"
+                url: "https://pve3.${CLUSTER_SHORT_DOMAIN}:8006"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -120,7 +120,7 @@ spec:
                   - "[STATUS] == 200"
               - name: Proxmox 4
                 group: core
-                url: "https://pve4.${CLUSTER_DOMAIN}:8006"
+                url: "https://pve4.${CLUSTER_SHORT_DOMAIN}:8006"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -129,7 +129,7 @@ spec:
                   - "[STATUS] == 200"   
               - name: dev ssh
                 group: core
-                url: "tcp://casa96.${CLUSTER_DOMAIN}:22322"
+                url: "tcp://casa96.${CLUSTER_SHORT_DOMAIN}:22322"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -161,7 +161,7 @@ spec:
                   - "[CERTIFICATE_EXPIRATION] > 48h"                  
               - name: Nas
                 group: core
-                url: "http://nas.${CLUSTER_DOMAIN}"
+                url: "http://nas.${CLUSTER_SHORT_DOMAIN}"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -186,21 +186,10 @@ spec:
                   - type: pagerduty
                 conditions:
                   - "[STATUS] == 200"
-                  
-              - name: Postgres Operator
-                group: core
-                url: "https://postgres-operator.pub.${CLUSTER_DOMAIN}"
-                interval: 5m
-                alerts:
-                  - type: slack
-                  - type: pagerduty
-                conditions:
-                  - "[STATUS] == 200"
-
               
               - name: Home Assistant
                 group: home-assistant
-                url: "https://ha.${CLUSTER_DOMAIN}"
+                url: "https://ha.${CLUSTER_SHORT_DOMAIN}"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -402,10 +391,10 @@ spec:
                   - type: slack
                   - type: pagerduty
                 dns:
-                  query-name: "nextcloud.${CLUSTER_DOMAIN}"
+                  query-name: "nextcloud.${CLUSTER_SHORT_DOMAIN}"
                   query-type: "A"
                 conditions:
-                  - "[BODY] == 192.168.1.128"
+                  - "[BODY] == 192.168.5.128"
                   - "[DNS_RCODE] == NOERROR"
               - name: home-assistant
                 group: DNS
@@ -415,16 +404,16 @@ spec:
                   - type: slack
                   - type: pagerduty
                 dns:
-                  query-name: "ha.${CLUSTER_DOMAIN}"
+                  query-name: "ha.${CLUSTER_SHORT_DOMAIN}"
                   query-type: "A"
                 conditions:
-                  - "[BODY] == 192.168.1.128"
+                  - "[BODY] == 192.168.5.128"
                   - "[DNS_RCODE] == NOERROR"
               
 
               - name: Maddy smtp extern starttls
                 group: mail
-                url: "starttls://mx.${CLUSTER_DOMAIN}:25"
+                url: "starttls://mx.${CLUSTER_SHORT_DOMAIN}:25"
                 interval: 30m
                 client:
                   timeout: 5m
@@ -436,7 +425,7 @@ spec:
                   - "[CERTIFICATE_EXPIRATION] > 48h"
               - name: Maddy smtp starttls
                 group: mail
-                url: "starttls://mx.${CLUSTER_DOMAIN}:587"
+                url: "starttls://mx.${CLUSTER_SHORT_DOMAIN}:587"
                 interval: 30m
                 client:
                   timeout: 5m
@@ -448,7 +437,7 @@ spec:
                   - "[CERTIFICATE_EXPIRATION] > 48h"
               - name: Maddy smtp tls
                 group: mail
-                url: "tls://mx.${CLUSTER_DOMAIN}:465"
+                url: "tls://mx.${CLUSTER_SHORT_DOMAIN}:465"
                 interval: 30m
                 client:
                   timeout: 5m
@@ -460,7 +449,7 @@ spec:
                   - "[CERTIFICATE_EXPIRATION] > 48h"
               # - name: Maddy imap starttls
               #   group: mail
-              #   url: "starttls://mx.${CLUSTER_DOMAIN}:143"
+              #   url: "starttls://mx.${CLUSTER_SHORT_DOMAIN}:143"
               #   interval: 30m
               #   client:
               #     timeout: 5s
@@ -469,7 +458,7 @@ spec:
               #     - "[CERTIFICATE_EXPIRATION] > 48h"
               - name: Maddy imap tls
                 group: mail
-                url: "tls://mx.${CLUSTER_DOMAIN}:993"
+                url: "tls://mx.${CLUSTER_SHORT_DOMAIN}:993"
                 interval: 30m
                 client:
                   timeout: 5m
@@ -492,7 +481,7 @@ spec:
                   
               - name: Gitea
                 group: apps
-                url: "https://git.${CLUSTER_DOMAIN}"
+                url: "https://git.${CLUSTER_SHORT_DOMAIN}"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -502,7 +491,7 @@ spec:
 
               - name: Gitea ssh
                 group: apps
-                url: "tcp://git.${CLUSTER_DOMAIN}:2222"
+                url: "tcp://git.${CLUSTER_SHORT_DOMAIN}:2222"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -514,7 +503,7 @@ spec:
 
               - name: Nextcloud
                 group: apps
-                url: "http://nextcloud.${CLUSTER_DOMAIN}"
+                url: "http://nextcloud.${CLUSTER_SHORT_DOMAIN}"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -524,7 +513,7 @@ spec:
                   
               - name: Tiny tiny RSS
                 group: apps
-                url: "http://rss.${CLUSTER_DOMAIN}"
+                url: "http://rss.${CLUSTER_SHORT_DOMAIN}"
                 interval: 5m
                 alerts:
                   - type: slack
@@ -534,7 +523,7 @@ spec:
                   
               - name: Hajimari
                 group: apps
-                url: "https://home.${CLUSTER_DOMAIN}"
+                url: "https://home.${CLUSTER_SHORT_DOMAIN}"
                 interval: 5m
                 alerts:
                   - type: slack
