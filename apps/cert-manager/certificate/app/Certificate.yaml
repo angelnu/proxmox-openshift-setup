@@ -12,7 +12,7 @@ spec:
     kind: ClusterIssuer
   dnsNames:
   - '${CLUSTER_DOMAIN}'
-  - '*.${CLUSTER_SHORTER_DOMAIN}'
+  - '*.${CLUSTER_SHORT_DOMAIN}'
   - '*.home.${CLUSTER_DOMAIN}'
   - '*.pub.${CLUSTER_DOMAIN}'
   - '*.apps.${CLUSTER_DOMAIN}'
