@@ -57,7 +57,7 @@ spec:
     # recovery:
     #   source: source
     initdb:
-      database: app
+      database: tt-rss
 ---
 apiVersion: v1
 kind: Secret
