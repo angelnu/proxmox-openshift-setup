@@ -56,7 +56,7 @@ spec:
         default:
           type: RoleBinding
           roleRef:
-            name: system:openshift:scc:anyuid  # For NFS mount
+            name: system:openshift:scc:privileged  # For NFS mount and sudo
             kind: ClusterRole
           subjects:
             - identifier: default
