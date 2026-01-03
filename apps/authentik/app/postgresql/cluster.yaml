@@ -52,13 +52,12 @@ spec:
     target: prefer-standby # instead of primary
   
   # 4. Database Initialization
-  enableSuperuserAccess: false
   bootstrap:
-    recovery:
-      source: source
-      database: app
-    # initdb:
+    # recovery:
+    #   source: source
     #   database: app
+    initdb:
+      database: app
 ---
 apiVersion: v1
 kind: Secret
