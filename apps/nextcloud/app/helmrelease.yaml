@@ -3,6 +3,7 @@ kind: HelmRelease
 metadata:
   name: nextcloud
 spec:
+  suspend: true
   interval: 30m
   chart:
     spec:

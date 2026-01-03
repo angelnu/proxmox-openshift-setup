@@ -52,13 +52,12 @@ spec:
     target: prefer-standby # instead of primary
   
   # 4. Database Initialization
-  # enableSuperuserAccess: true  
   bootstrap:
-    recovery:
-      source: source
+    # recovery:
+    #   source: source
+    #   database: tt-rss
+    initdb:
       database: postgres
-    # initdb:
-    #   database: postgres
 ---
 apiVersion: v1
 kind: Secret
