@@ -34,8 +34,8 @@ spec:
           - SYS_PTRACE #enable debuging
     
     maddy:
-      hostname: "mx.${CLUSTER_DOMAIN}"
-      primary_domain: "${CLUSTER_DOMAIN}"
+      hostname: "mx.${CLUSTER_SHORT_DOMAIN}"
+      primary_domain: "${CLUSTER_SHORT_DOMAIN}"
       #secondary_domains: <set in secret>
       tls_secret_name: "${CLUSTER_DOMAIN_CERT}"
       # config_files:
