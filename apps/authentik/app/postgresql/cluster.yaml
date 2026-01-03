@@ -34,11 +34,11 @@ spec:
   # 3. Storage Configuration
   storage:
     storageClass: longhorn-postgres-replica-storage
-    size: 2Gi
+    size: 5Gi
   walStorage:
     # Separate WAL storage is recommended for production to avoid IO contention
     storageClass: longhorn-postgres-replica-storage
-    size: 1Gi
+    size: 3Gi
 
   externalClusters:
     - name: source
