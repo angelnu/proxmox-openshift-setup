@@ -181,8 +181,8 @@ spec:
         circumvention_autoconfig.config.php.config.php: |-
           <?php
           include \OC::$configDir . 'autoconfig.php';
-          $CONFIG = array_merge($CONFIG, $AUTOCONFIG);
-          $CONFIG['dbpassword'] = $CONFIG['dbpass'];
+          $CONFIG = $AUTOCONFIG;
+          $CONFIG['dbpassword'] = $AUTOCONFIG['dbpass'];
           $trustedProxies = getenv('TRUSTED_PROXIES');
           if ($trustedProxies) {
             $CONFIG['trusted_proxies'] = array_filter(array_map('trim', explode(' ', $trustedProxies)));
