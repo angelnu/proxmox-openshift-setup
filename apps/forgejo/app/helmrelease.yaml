@@ -31,13 +31,13 @@ spec:
         nginx.ingress.kubernetes.io/proxy-body-size: "8000m"
         nginx.ingress.kubernetes.io/enable-global-auth: "false"
       hosts:
-      - host: git.${CLUSTER_DOMAIN}
+      - host: git.${CLUSTER_SHORT_DOMAIN}
         paths:
           - path: /
             pathType: Prefix
       tls:
       - hosts:
-        - git.${CLUSTER_DOMAIN}
+        - git.${CLUSTER_SHORT_DOMAIN}
 
     persistence:
       enabled: true
@@ -91,7 +91,7 @@ spec:
           SMTP_ADDR: "${CLUSTER_MAIL_SERVER}"
           SMTP_PORT: "${CLUSTER_MAIL_SERVER_PORT}"
           PROTOCOL: smtp
-          FROM: "forgejo@${CLUSTER_DOMAIN}"
+          FROM: "forgejo@${CLUSTER_SHORT_DOMAIN}"
           USER: ""
           PASSWD: ""
     serviceAccount:
