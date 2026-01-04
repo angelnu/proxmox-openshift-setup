@@ -8,10 +8,13 @@ spec:
       app.kubernetes.io/name: forgejo
   ingress:
   - from:
-    # Allow ssh ingress
+    # Allow ssh and http ingress
     - ipBlock:
         cidr: "0.0.0.0/0"
     ports:
+    - protocol: TCP
+      port: 3000
+      endPort: 3000
     - protocol: TCP
       port: 2222
       endPort: 2222
