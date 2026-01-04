@@ -38,6 +38,18 @@ spec:
               - /config
             securityContext:
               runAsUser: 0
+    serviceAccount:
+      default:
+        enabled: true
+    rbac:
+      bindings:
+        default:
+          type: RoleBinding
+          roleRef:
+            name: system:openshift:scc:anyuid  # For runAsUser
+            kind: ClusterRole
+          subjects:
+            - identifier: default
 
     persistence:
       config:
