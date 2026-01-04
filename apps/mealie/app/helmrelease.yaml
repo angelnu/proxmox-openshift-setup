@@ -50,9 +50,11 @@ spec:
               # SMTP_PASSWORD=
 
     persistence:
-      app/data:
+      api-data:
         enabled: true
         existingClaim: mealie-pvc
+        globalMounts:
+        - path: /app/data
 
     service:
       main:
