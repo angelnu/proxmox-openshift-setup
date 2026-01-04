@@ -180,6 +180,11 @@ spec:
           $CONFIG = array (
             'bulkupload.enabled' => false,
           );
+        trusted_domains.config.php: |-
+          $trustedDomains = getenv('NEXTCLOUD_TRUSTED_DOMAINS');
+          if ($trustedDomains) {
+            $CONFIG['trusted_domains'] = array_filter(array_map('trim', explode(' ', $trustedDomains)));
+          }
       mail:
         enabled: true
         fromAddress: nextcloud
