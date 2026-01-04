@@ -56,11 +56,11 @@ spec:
       admin:
         username: forgejo-admin
         # password: set in secret
-        email: "forgejo@${CLUSTER_DOMAIN}"
+        email: "forgejo@${CLUSTER_SHORT_DOMAIN}"
 
       # See https://forgejo.org/docs/latest/admin/config-cheat-sheet/
       config:
-        APP_NAME: "Forgejo for ${CLUSTER_DOMAIN}"
+        APP_NAME: "Forgejo for ${CLUSTER_SHORT_DOMAIN}"
         #RUN_MODE: dev
         server:
           SSH_PORT : 2222   
