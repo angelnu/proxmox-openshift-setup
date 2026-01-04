@@ -111,6 +111,11 @@ spec:
 
     nextcloud:
       host: nextcloud.${CLUSTER_SHORT_DOMAIN}
+      trustedDomains:
+        - nextcloud.${CLUSTER_SHORT_DOMAIN}
+        - nextcloud.pub.${CLUSTER_DOMAIN}
+        - nextcloud.home.${CLUSTER_DOMAIN}
+          0 => 'nextcloud.home.angelnu.com',
       extraVolumes:
       - name: nfs-video
         nfs:
