@@ -3,6 +3,7 @@ kind: HelmRelease
 metadata:
   name: nextcloud
 spec:
+  suspend: true
   interval: 30m
   chart:
     spec:
@@ -118,6 +119,7 @@ spec:
       TRUSTED_PROXIES:
         - '${NETWORK_K8S_CLUSTER_CIDR}'
       FORWARDED_FOR_HEADERS:
+        - HTTP_X_FORWARDED_FOR
       extraVolumes:
       - name: nfs-video
         nfs:
@@ -158,18 +160,6 @@ spec:
           max_execution_time = 3600
           default_phone_region = DE
       configs:
-        proxy.config.php: |-
-          <?php
-          $CONFIG = array (
-            'trusted_proxies' => 
-            array(
-               0 => '${NETWORK_K8S_CLUSTER_CIDR}',
-            ),
-            'forwarded_for_headers' => 
-            array (
-              0 => 'HTTP_X_FORWARDED_FOR',
-            ),
-          );
         gitops.config.php: |-
           <?php
           $CONFIG = array (
@@ -183,6 +173,7 @@ spec:
           $CONFIG = array (
             'bulkupload.enabled' => false,
           );
+        # Circumvention for NEXTCLOUD_TRUSTED_DOMAINS not used in old config
         trusted_domains.config.php: |-
           <?php
           $trustedDomains = getenv('NEXTCLOUD_TRUSTED_DOMAINS');
