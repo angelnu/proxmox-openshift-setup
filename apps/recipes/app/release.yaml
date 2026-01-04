@@ -33,7 +33,7 @@ spec:
               POSTGRES_HOST: 
                 secretKeyRef:
                   name: "${MY_NAMESPACE}-db-app"
-                  key: password
+                  key: host
               POSTGRES_PORT: 
                 secretKeyRef:
                   name: "${MY_NAMESPACE}-db-app"
