@@ -23,10 +23,29 @@ spec:
           main:
             image:
               repository: ghcr.io/mealie-recipes/mealie
-              tag: v3.8.0@sha256:8cb354ce7b9e73304c0f3dedf13b7fe8ffe2f25775c9bbe79b5c446ef0334fd6
+              tag: v3.9.2
             env:
-              TZ: "Europe/Berlin"
+              ALLOW_SIGNUP: "false"
+
               API_PORT: &api_port "9000"
+
+              DB_ENGINE: sqlite # Optional: 'sqlite', 'postgres'
+              # =====================================
+              # Postgres Config
+              POSTGRES_USER: mealie
+              POSTGRES_PASSWORD: mealie
+              POSTGRES_SERVER: postgres
+              POSTGRES_PORT: 5432
+              POSTGRES_DB: mealie
+              # =====================================
+              # Email Configuration
+              # SMTP_HOST=
+              # SMTP_PORT=587
+              # SMTP_FROM_NAME=Mealie
+              # SMTP_AUTH_STRATEGY=TLS # Options: 'TLS', 'SSL', 'NONE'
+              # SMTP_FROM_EMAIL=
+              # SMTP_USER=
+              # SMTP_PASSWORD=
 
     persistence:
       api-data:
