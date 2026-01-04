@@ -94,7 +94,9 @@ spec:
           FROM: "forgejo@${CLUSTER_DOMAIN}"
           USER: ""
           PASSWD: ""
-
+    serviceAccount:
+      create: true
+  
   valuesFrom:
     - kind: Secret
       name: "forgejo-helm-values"
