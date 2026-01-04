@@ -40,7 +40,7 @@ spec:
               TTRSS_PLUGINS: auth_ldap, note # auth_remote, auth_internal
 
               # LDAP settings
-              TTRSS_LDAP_AUTH_SERVER_URI: ldap://ldap.${CLUSTER_NAME}.${CLUSTER_DOMAIN}
+              TTRSS_LDAP_AUTH_SERVER_URI: ldap://ldap.${CLUSTER_DOMAIN}
               #TTRSS_LDAP_AUTH_USETLS: true #It does not work with php8.1
               #TTRSS_LDAP_AUTH_ALLOW_UNTRUSTED_CERT: true
               #TTRSS_LDAP_AUTH_BINDDN: set in secret
