@@ -13,8 +13,6 @@ spec:
         name: forgejo
         namespace: flux-system
       interval: 5m
-  dependsOn:
-    - name: forgejo-db
   # All values at https://code.forgejo.org/forgejo-helm/forgejo-helm
   values:
     service:
