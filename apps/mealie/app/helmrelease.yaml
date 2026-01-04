@@ -22,14 +22,6 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/hkotel/mealie
-              tag: frontend-v1.0.0beta-4
-            env:
-              TZ: "Europe/Berlin"
-              # -- Set the application database type
-              DB_TYPE: sqlite
-          api:
-            image:
               repository: ghcr.io/mealie-recipes/mealie
               tag: v3.8.0@sha256:8cb354ce7b9e73304c0f3dedf13b7fe8ffe2f25775c9bbe79b5c446ef0334fd6
             env:
@@ -49,8 +41,6 @@ spec:
       main:
         controller: main
         ports:
-          http:
-            port: 3000
           api:
             port: *api_port
 
@@ -71,6 +61,6 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: main
-                  port: http
+                  port: api
           - host: mealie.home.${CLUSTER_DOMAIN}
             paths: *paths
