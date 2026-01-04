@@ -99,9 +99,3 @@ spec:
                   port: http
           - host: recipes.home.${CLUSTER_DOMAIN}
             paths: *paths
-
-  valuesFrom:
-    - kind: Secret
-      name: "recipes-helm-values"
-      valuesKey: recipes.yaml
-      optional: false
