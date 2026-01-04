@@ -115,6 +115,9 @@ spec:
         - nextcloud.${CLUSTER_SHORT_DOMAIN}
         - nextcloud.pub.${CLUSTER_DOMAIN}
         - nextcloud.home.${CLUSTER_DOMAIN}
+      TRUSTED_PROXIES:
+        - '${NETWORK_K8S_CLUSTER_CIDR}'
+      FORWARDED_FOR_HEADERS:
       extraVolumes:
       - name: nfs-video
         nfs:
@@ -181,6 +184,7 @@ spec:
             'bulkupload.enabled' => false,
           );
         trusted_domains.config.php: |-
+          <?php
           $trustedDomains = getenv('NEXTCLOUD_TRUSTED_DOMAINS');
           if ($trustedDomains) {
             $CONFIG['trusted_domains'] = array_filter(array_map('trim', explode(' ', $trustedDomains)));
