@@ -53,11 +53,11 @@ spec:
   
   # 4. Database Initialization
   bootstrap:
-    recovery:
-      source: source
-      database: app
-    # initdb:
+    # recovery:
+    #   source: source
     #   database: app
+    initdb:
+      database: app
 ---
 apiVersion: v1
 kind: Secret
