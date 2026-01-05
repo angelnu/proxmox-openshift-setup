@@ -551,16 +551,6 @@ spec:
                 conditions:
                   - "[STATUS] == 200"
                   
-              - name: Mealie
-                group: apps
-                url: "https://mealie.pub.${CLUSTER_DOMAIN}"
-                interval: 5m
-                alerts:
-                  - type: slack
-                  - type: pagerduty
-                conditions:
-                  - "[STATUS] == 200"
-                  
               - name: Handbrake
                 group: apps
                 url: "https://handbrake.pub.${CLUSTER_DOMAIN}"
