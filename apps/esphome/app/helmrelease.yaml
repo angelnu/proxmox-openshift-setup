@@ -57,6 +57,7 @@ spec:
       config:
         enabled: true
         existingClaim: esphome-pvc
+        size: 1Gi
       build:
         enabled: true
         type: persistentVolumeClaim
