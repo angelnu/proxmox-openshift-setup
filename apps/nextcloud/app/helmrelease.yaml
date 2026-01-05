@@ -134,9 +134,9 @@ spec:
         nfs:
           server: "${NFS_SERVER}"
           path: "${NFS_DOWNLOADS}"
-      # - name: esphome
-      #   persistentVolumeClaim:
-      #     claimName: esphome-pvc
+      - name: esphome
+        persistentVolumeClaim:
+          claimName: esphome-pvc
       extraVolumeMounts:
       - name: nfs-video
         mountPath: "/video"
