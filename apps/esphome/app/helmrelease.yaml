@@ -59,6 +59,7 @@ spec:
         existingClaim: esphome-pvc
       build:
         enabled: true
+        type: persistentVolumeClaim
         # type: emptyDir
         # globalMounts:
         #   - path: /config/.esphome
