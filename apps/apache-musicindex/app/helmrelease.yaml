@@ -38,7 +38,7 @@ spec:
         default:
           type: RoleBinding
           roleRef:
-            name: system:openshift:scc:hostmount-anyuid  # For CAP_NET_BIND_SERVICE and NFS
+            name: system:openshift:scc:privileged For CAP_NET_BIND_SERVICE and NFS
             kind: ClusterRole
           subjects:
             - identifier: default
