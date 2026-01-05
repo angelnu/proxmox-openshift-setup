@@ -6,7 +6,7 @@ metadata:
   name: &app novnc-kicad
   namespace: flux-system
 spec:
-  targetNamespace: &ns novc
+  targetNamespace: &ns novnc
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
