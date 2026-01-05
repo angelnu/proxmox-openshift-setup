@@ -60,6 +60,7 @@ spec:
       build:
         enabled: true
         type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
         # type: emptyDir
         # globalMounts:
         #   - path: /config/.esphome
