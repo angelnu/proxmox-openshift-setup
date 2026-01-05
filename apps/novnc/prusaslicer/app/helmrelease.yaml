@@ -39,7 +39,7 @@ spec:
         default:
           type: RoleBinding
           roleRef:
-            name: system:openshift:scc:hostmount-anyuid-v2 # For user 33 and NFS
+            name: system:openshift:scc:privileged # For privileged, user 33 and NFS
             kind: ClusterRole
           subjects:
             - identifier: default
