@@ -551,9 +551,9 @@ spec:
                 conditions:
                   - "[STATUS] == 200"
                   
-              - name: Recipes
+              - name: Mealie
                 group: apps
-                url: "https://recipes.pub.${CLUSTER_DOMAIN}"
+                url: "https://mealie.pub.${CLUSTER_DOMAIN}"
                 interval: 5m
                 alerts:
                   - type: slack
