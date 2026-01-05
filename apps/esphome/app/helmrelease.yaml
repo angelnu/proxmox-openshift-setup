@@ -59,10 +59,10 @@ spec:
         existingClaim: esphome-pvc
       build:
         enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /config/.esphome
-            readOnly: false
+        # type: emptyDir
+        # globalMounts:
+        #   - path: /config/.esphome
+        #     readOnly: false
       ssh-key:
         enabled: true
         type: secret
