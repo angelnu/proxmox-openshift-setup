@@ -7,6 +7,7 @@ keys:
   age:
     - &cluster_age_key age1wdapsm2nw9pr0nmak892gqwat44uhay7d7z5fqtwgsmm6ecatggsfql3yx
     - &angel_age_key age19zycawkart4t4l7a238w0n2w0rmw6anjadwv9yr3ce3js4dz3dcqqgkvsw
+    - &mireille_age_key age16krrdc5j8t9pf5qyldhgq59ayjktrkzs6kq730dpu4lpy6gkt9qqd8keur
 creation_rules:
   - path_regex: .+secret(\.sops)?\.ya?ml
     input_type: yaml
@@ -15,6 +16,7 @@ creation_rules:
       - age: &key_groups
           - *cluster_age_key
           - *angel_age_key
+          - *mireille_age_key
   - path_regex: .+secret(\.sops)?\.env
     input_type: env
     key_groups:
